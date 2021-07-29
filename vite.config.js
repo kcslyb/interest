@@ -1,7 +1,21 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+const path = require('path')
+const resolve = (dir) => path.join(__dirname, dir)
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()]
+
+  plugins: [vue()],
+
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: {
+          hack: `true; @import (reference) "${resolve('src/style/global/config.less')}";`,
+        },
+        javascriptEnabled: true,
+      }
+    }
+  }
 })

@@ -1,0 +1,47 @@
+<template>
+  <div>
+    <cs-button
+        :type="item.type"
+        :span="span(index)"
+        :disabled="item.disabled"
+        :key="`btn_group_${index}`"
+        v-for="(item, index) of btnList"
+        @on-click="handleClick(item)">
+      {{item.label}}
+    </cs-button>
+  </div>
+</template>
+
+<script setup>
+import CsButton from './CsButton.vue'
+import {defineProps} from "vue"
+
+const props = defineProps({
+  btnList: {
+    type: Array,
+    default: () => {
+      return [
+        {
+          type: 'info',
+          label: 'info'
+        }, {
+          type: 'text',
+          label: 'text'
+        }
+      ]
+    }
+  }
+})
+const span = (index) => {
+  return index < props.btnList.length - 1
+}
+
+const emits = defineEmits(['on-click'])
+const handleClick = (item) => {
+  emits('on-click', item)
+}
+</script>
+
+<style scoped>
+
+</style>
