@@ -15,6 +15,8 @@ git commit -m 'deploy'
 
 git remote add origin https://github.com/kcslyb/kcslyb.github.io.git
 
+git pull --rebase origin master
+
 git push origin master
 
 cd -
