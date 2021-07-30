@@ -1,8 +1,8 @@
 <template>
   <div>
     <cs-button
-        :type="item.type"
         :span="span(index)"
+        :type="item.type || 'info'"
         :disabled="item.disabled"
         :key="`btn_group_${index}`"
         v-for="(item, index) of btnList"

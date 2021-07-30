@@ -9,7 +9,15 @@
            ? (item.expanded ? 'tree-icon-left': 'tree-icon-bottom') : ''
         ]"
             @click.stop="clickIcon(item, true)"></div>
-        <div class="tree-content-label" @click.stop="clickNode(item)">{{ item[propObj.label] }}</div>
+        <div
+            :class="[
+                'tree-content-label',
+                {
+                  'label-bold': isBold
+                }]"
+            @click.stop="clickNode(item)">
+          {{ item[propObj.label] }}
+        </div>
       </div>
       <div class="tree-option" v-show="!item.expanded">
         <div :key="index + optIndex + opt[propObj.value]" v-for="(opt, optIndex) of item[propObj.children] || []">
@@ -24,10 +32,18 @@
                    ? (opt.expanded ? 'tree-icon-left': 'tree-icon-bottom') : ''
                 ]"
                   @click.stop="clickIcon(opt, true)"></div>
-              <div class="tree-content-label" @click.stop="clickNode(opt)">{{ opt[propObj.label] }}</div>
+              <div
+                  :class="[
+                    'tree-content-label',
+                    {
+                      'label-bold': isBold
+                    }]"
+                  @click.stop="clickNode(opt)">{{ opt[propObj.label] }}
+              </div>
             </div>
             <div class="tree-option" v-show="!opt.expanded">
               <cs-tree
+                  :is-bold="isBold"
                   :prop-obj="propObj"
                   :current-item="currentItem"
                   :options="opt[propObj.children]"
@@ -43,7 +59,12 @@
 
 <script setup>
 import {defineProps, reactive} from 'vue'
+
 defineProps({
+  isBold: {
+    type: Boolean,
+    default: false
+  },
   propObj: {
     type: Object,
     default: () => {
@@ -111,6 +132,12 @@ const clickNode = (item) => {
   -ms-flex-align: center;
   padding: 0;
   cursor: pointer;
+
+  &:hover {
+    border-radius: 2px;
+    color: @active-color;
+    background-color: @active-background-color;
+  }
 }
 
 .tree-content-icon {
@@ -157,5 +184,9 @@ const clickNode = (item) => {
   border-radius: 2px;
   color: @active-color;
   background-color: @active-background-color;
+}
+
+.label-bold {
+  font-weight: bold;
 }
 </style>

@@ -6,7 +6,14 @@
            {'cs-label-bottom': showUnderLine}
            ]">
     <div :class="{'cs-label-container': slots.right}">
-      <span :class="['cs-label-text']">{{ label }}</span>
+      <div>
+        <div class="label-icon-container">
+          <slot name="icon">
+            <span v-if="slots.icon || showIcon" class="label-icon discount"></span>
+          </slot>
+          <span :class="['cs-label-text']">{{ label }}</span>
+        </div>
+      </div>
       <slot name="right"/>
     </div>
   </div>
@@ -17,6 +24,10 @@ import {defineProps, useSlots} from 'vue'
 
 defineProps({
   label: String,
+  showIcon: {
+    type: Boolean,
+    default: true
+  },
   showUnderLine: Boolean,
   textAlign: {
     type: String,
@@ -45,6 +56,37 @@ const slots = useSlots()
   border-radius: 4px;
 }
 
+.label-icon-container {
+  display: inline-flex;
+}
+
+.label-icon {
+  color: #fff;
+  width: 6px;
+  height: 6px;
+  position: relative;
+  text-align: center;
+  margin-right: 5px;
+  //transform: translateY(4px);
+  &:after {
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 100%;
+    border-style: solid;
+    border-width: 3px;
+  }
+}
+
+.label-icon.discount {
+  &:after {
+    border-color: @default-color @default-color transparent @default-color;
+  }
+}
+.label-icon.discount {
+  background: @default-color;
+}
+
 .cs-label-bottom {
   border-bottom: 1px solid @border-color;
 }
@@ -52,6 +94,7 @@ const slots = useSlots()
 .cs-label-text {
   font-size: 14px;
   line-height: 28px;
+  transform: translateY(-8px);
 }
 
 .cs-label-container {

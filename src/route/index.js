@@ -5,13 +5,21 @@ const home = () => import("../components/Home.vue")
 export const routes = [
     {
         path: "/",
-        redirect: "/home"
-    }, {
-        path: "/home",
-        name: "home",
-        component: home,
+        redirect: "/components/IndexExample"
     }, {
         path: "/components",
+        name: "componentsIndex",
+        component: home,
+        children: [
+            {
+                path: "/components/IndexExample",
+                name: "IndexExample",
+                meta: {label: '树结构示例'},
+                component: () => import("../components/view/example/IndexExample.vue")
+            }
+        ]
+    }, {
+        path: "/components/IndexExample",
         name: "ComponentsLabel",
         meta: {label: '组件'},
         component: home,
@@ -47,6 +55,19 @@ export const routes = [
                 name: "TreeExample",
                 meta: {label: '树结构示例'},
                 component: () => import("../components/view/example/TreeExample.vue")
+            }
+        ]
+    }, {
+        path: "/components",
+        name: "ComponentsTable",
+        meta: {label: '组件'},
+        component: home,
+        children: [
+            {
+                path: "/components/TableExample",
+                name: "TableExample",
+                meta: {label: '表格示例'},
+                component: () => import("../components/view/example/TableExample.vue")
             }
         ]
     }, {
