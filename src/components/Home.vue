@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="home-header cs-border-bottom">
-      <div class="home-header-title"><span>cs components</span></div>
+      <div class="home-header-title"><span>组件文档</span></div>
     </div>
     <div class="home-content">
       <div class="home-content-aside">
@@ -12,7 +12,7 @@
             @click-node="handleClickNode"
         ></cs-tree>
       </div>
-      <div class="home-content-right">
+      <div class="home-content-right cs-scrollbar">
         <router-view/>
       </div>
     </div>
@@ -87,7 +87,7 @@ const handleClickNode = (item) => {
     .home-header-title {
       text-align: left;
       font-weight: bold;
-      font-size: 26px;
+      font-size: 20px;
       line-height: 50px;
     }
   }
