@@ -2,16 +2,16 @@
   <div id="tableContainer" ref="container" class="text-container cs-scrollbar">
     <div class="text-title" :style="{width: `${proxy.rowWidth}px`}">
       <span
-          v-show="columns.length > 0"
+          v-show="_columns.length > 0"
           :class="[
               'text-title-item',
                {
-                 'cs-border-right': (index < columns.length - 1)
+                 'cs-border-right': (index < _columns.length - 1)
                }
           ]"
-          :style="`width: ${item.width}%`"
+          :style="`width: ${_columns[index].width}px`"
           :key="`columns_title_${index}`"
-          v-for="(item, index) of columns">
+          v-for="(item, index) of _columns">
         <span v-if="item.type === 'checkbox'" :class="[
             'cell-text',
              `text-${textAlign}`,
@@ -47,12 +47,12 @@
           :class="[
               'text-cell-item',
                {
-                 'cs-border-right': (index < columns.length - 1)
+                 'cs-border-right': (index < _columns.length - 1)
                }
           ]"
-          :style="`width: ${item.width}%`"
+          :style="`width: ${item.width}px`"
           :key="`row_columns_title_${index}`"
-          v-for="(item, index) of columns">
+          v-for="(item, index) of _columns">
         <span v-if="item.type === 'serial'" :class="[
             'cell-text',
              `text-${textAlign}`,
@@ -92,34 +92,31 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, getCurrentInstance, ref, computed} from 'vue'
+import {defineProps, onMounted, getCurrentInstance, ref, computed, reactive} from 'vue'
 
 let span = ref(0)
 let width = ref(0)
 let rowWidth = ref(0)
+let _columns = reactive(props.columns)
 
 const { proxy } = getCurrentInstance()
+
+const container = ref(null)
+
+onMounted(() => {
+  proxy.width = container._value.offsetWidth
+  proxy.span = setSpan(0)
+  proxy.rowWidth = computedWidth(proxy)
+})
 
 const setSpan = (span) => {
   const temp = (proxy.width - span) / props.columns.length
   return temp > 100 ? temp : 100
 }
 
-const container = ref(null)
-
-onMounted(() => {
-  console.info('onMounted')
-  console.info('width', container._value.offsetWidth)
-  proxy.width = container._value.offsetWidth
-  proxy.span = setSpan(0)
-  console.info('span', proxy.span)
-  proxy.rowWidth = computedWidth(proxy)
-  console.info('rowWidth', proxy.rowWidth)
-})
-
 const computedWidth = (proxy) => {
   let widthSum = 0
-  props.columns.map(value => {
+  _columns.map(value => {
     if (value.width) {
       widthSum += Number(value.width)
       proxy.span = setSpan(widthSum)
