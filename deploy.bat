@@ -2,7 +2,8 @@
 #npm run build
 
 # 进入构建文件夹
-cd dist
+D:
+cd D:\PersonalFolder\WorkSpace\interest\dist
 
 git init
 git add -A
