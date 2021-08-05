@@ -1,6 +1,6 @@
 <template>
   <div id="tableContainer" ref="container" class="text-container cs-scrollbar">
-    <div class="text-title" :style="{width: `${rowWidth}px`}">
+    <div class="text-title" :style="{width: `${proxy.rowWidth}px`}">
       <span
           v-show="columns.length > 0"
           :class="[
@@ -41,7 +41,7 @@
     <div
         class="text-title"
         :key="`row_${rowIndex}`"
-        :style="{width: `${rowWidth}px`}"
+        :style="{width: `${proxy.rowWidth}px`}"
         v-for="(row, rowIndex) of data">
       <span
           :class="[
@@ -92,27 +92,29 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, getCurrentInstance, ref, computed, reactive} from 'vue'
+import {defineProps, onMounted, getCurrentInstance, ref, computed} from 'vue'
 
 let span = ref(0)
 let width = ref(0)
 let rowWidth = ref(0)
 
+const { proxy } = getCurrentInstance()
+
 const setSpan = (span) => {
-  const temp = (width - span) / props.columns.length
+  const temp = (proxy.width - span) / props.columns.length
   return temp > 100 ? temp : 100
 }
+
+const container = ref(null)
+
 onMounted(() => {
   console.info('onMounted')
-  const { proxy } = getCurrentInstance()
-  width = proxy?.$refs?.container.offsetWidth
+  console.info('width', container._value.offsetWidth)
+  proxy.width = container._value.offsetWidth
   proxy.span = setSpan(0)
+  console.info('span', proxy.span)
   proxy.rowWidth = computedWidth(proxy)
-  // props.columns.forEach(value => {
-  //   if (value.event) {
-  //     proxy.emitsOptions.push(value.event)
-  //   }
-  // })
+  console.info('rowWidth', proxy.rowWidth)
 })
 
 const computedWidth = (proxy) => {
