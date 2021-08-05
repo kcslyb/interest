@@ -4,7 +4,7 @@
       <div class="label">
         <cs-label :label="label"></cs-label>
       </div>
-      <cs-table :data="data" :columns="columns"></cs-table>
+      <cs-table :data="data" :columns="tableColumns" :is-over-hidden="false"></cs-table>
     </slot>
   </div>
 </template>
@@ -14,7 +14,11 @@ import CsLabel from '../../../package/label/src/CsLabel.vue'
 import CsTable from '../../../package/table/src/CsTable.vue'
 import {defineProps} from "vue"
 
-defineProps({
+const props =defineProps({
+  type: {
+    type: String,
+    default: ''
+  },
   label: {
     type: String,
     default: '基础用法（属性：label；text-align；show-under-line；showIcon）'
@@ -65,6 +69,28 @@ defineProps({
     }
   }
 })
+
+const process = {
+  slots: [
+    {label: 'name', prop: 'name'},
+    {label: '说明', prop: 'description'}
+  ],
+  params: [
+    {label: '参数', prop: 'param'},
+    {label: '说明', prop: 'description'},
+    {label: '类型', prop: 'type'},
+    {label: '可选值', prop: 'values'},
+    {label: '默认值', prop: 'default'}
+  ],
+  methods: [
+    {label: 'name', prop: 'name'},
+    {label: '说明', prop: 'description'},
+    {label: '参数', prop: 'params'}
+  ]
+}
+
+const tableColumns = props.type ? process[props.type] : props.columns
+
 </script>
 
 <style scoped lang="less">

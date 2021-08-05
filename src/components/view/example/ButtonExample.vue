@@ -106,7 +106,7 @@ const propData = [
 const groupPropData = [
   {
     param: 'btnList',
-    description: '后面是否跟间距',
+    description: '生成按钮参数数组',
     type: 'Array',
     values: '[{label: 显示值, ...单个按钮组件的所有参数}]',
     default: ''
