@@ -46,7 +46,7 @@ const paramsData = [
     default: 'true',
   }, {
     param: 'textAlign',
-    description: '单元格对齐方式',
+    description: '表头单元格对齐方式',
     type: 'String',
     values: 'center/left/right',
     default: 'center',
@@ -107,6 +107,13 @@ const columnsParamsData = [
     type: 'String',
     values: '',
     default: '',
+  },
+  {
+    param: 'align',
+    description: '单元格对齐方式',
+    type: 'String',
+    values: 'left/center/right',
+    default: 'center',
   }
 ]
 

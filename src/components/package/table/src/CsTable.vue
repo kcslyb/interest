@@ -14,7 +14,7 @@
           v-for="(item, index) of _columns">
         <span v-if="item.type === 'checkbox'" :class="[
             'cell-text',
-             `text-${textAlign}`,
+             `text-center}`,
              {
                'disabled': rowDisabled,
              }
@@ -55,7 +55,7 @@
           v-for="(item, index) of _columns">
         <span v-if="item.type === 'serial'" :class="[
             'cell-text',
-             `text-${textAlign}`,
+             `text-center`,
              {
                'cell-text-overflow': isOverHidden
              }
@@ -64,7 +64,7 @@
         </span>
         <span v-else-if="item.type === 'checkbox'" :class="[
             'cell-text',
-             `text-${textAlign}`,
+             `text-center}`,
              {
                'disabled': colDisabled(row)
              }
@@ -78,7 +78,7 @@
         </span>
         <span v-else :class="[
             'cell-text',
-             `text-${textAlign}`,
+             `text-${item.align || 'center'}`,
              {
                'cell-btn': item.event,
                'cell-text-overflow': isOverHidden
@@ -105,22 +105,24 @@ const container = ref(null)
 
 onMounted(() => {
   proxy.width = container._value.offsetWidth
-  proxy.span = setSpan(0)
   proxy.rowWidth = computedWidth(proxy)
+  console.info(proxy.width)
 })
 
-const setSpan = (span) => {
-  const temp = (proxy.width - span) / props.columns.length
+const setSpan = (span, index = 0) => {
+  const temp = (proxy.width - span) / (props.columns.length - index)
+  console.info(temp)
   return temp > 100 ? temp : 100
 }
 
 const computedWidth = (proxy) => {
   let widthSum = 0
-  _columns.map(value => {
+  _columns.map((value, index) => {
     if (value.width) {
       widthSum += Number(value.width)
-      proxy.span = setSpan(widthSum)
+      proxy.span = setSpan(widthSum, index)
     } else {
+      proxy.span = setSpan(widthSum, index)
       value.width = Number(proxy.span)
       widthSum += Number(proxy.span)
     }
