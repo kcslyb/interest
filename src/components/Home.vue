@@ -5,12 +5,7 @@
     </div>
     <div class="home-content">
       <div class="home-content-aside">
-        <cs-tree
-            :is-bold="true"
-            :options="menus"
-            :current-item="currentItem"
-            @click-node="handleClickNode"
-        ></cs-tree>
+        <cs-list :options="menus" @click-item="handleClickItem"></cs-list>
       </div>
       <div class="home-content-right cs-scrollbar">
         <router-view/>
@@ -20,10 +15,10 @@
 </template>
 
 <script setup>
-import {computed, reactive} from 'vue'
+import {reactive} from 'vue'
 import {useRouter} from "vue-router"
-import CsTree from "../components/package/tree/src/CsTree.vue";
 import CsLabel from '../components/package/label/src/CsLabel.vue'
+import CsList from "../components/package/list/src/CsList.vue"
 import {routes} from "../route";
 
 const initMenuTree = () => {
@@ -58,11 +53,8 @@ const initMenuTree = () => {
 
 const menus = initMenuTree()
 
-const currentItem = reactive({})
-
 const router = useRouter()
-const handleClickNode = (item) => {
-  Object.assign(currentItem, item)
+const handleClickItem = (item) => {
   router.push(item.path)
 }
 
@@ -89,6 +81,7 @@ const handleClickNode = (item) => {
       font-weight: bold;
       font-size: 20px;
       line-height: 50px;
+      color: @primary-color;
     }
   }
 

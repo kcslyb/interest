@@ -57,6 +57,7 @@ const slots = useSlots()
 }
 
 .label-icon-container {
+  width: 100%;
   display: inline-flex;
 }
 
@@ -83,6 +84,7 @@ const slots = useSlots()
     border-color: @default-color @default-color transparent @default-color;
   }
 }
+
 .label-icon.discount {
   background: @default-color;
 }
@@ -94,6 +96,7 @@ const slots = useSlots()
 .cs-label-text {
   font-size: 14px;
   line-height: 28px;
+  color: @default-color;
   transform: translateY(-8px);
 }
 
