@@ -14,15 +14,14 @@ export const routes = [
             {
                 path: "/components/IndexExample",
                 name: "IndexExample",
-                meta: {label: '树结构示例'},
                 component: () => import("../components/view/example/IndexExample.vue")
             }
         ]
     // }, {
-    //     path: "/components/music",
-    //     name: "music",
-    //     meta: {label: 'music'},
-    //     component: () => import("../components/view/music/index.vue")
+        // path: "/components/music",
+        // name: "music",
+        // meta: {label: 'music'},
+        // component: () => import("../components/view/music/index.vue")
         // component: home,
         // children: [
         //     {

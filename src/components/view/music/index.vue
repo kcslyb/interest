@@ -9,25 +9,42 @@
         </span>
         <span class="play-item-opt">
         <!--          <span class="play-item-opt-item">play</span>-->
-        <!--          <span class="play-item-opt-item">download</span>-->
+          <span class="play-item-opt-item" @click.stop="handlePlay(item)">play</span>
         </span>
       </div>
     </div>
-    <div class="play-footer"></div>
+    <div class="play-footer">
+<!--      <audio controls="controls">-->
+<!--        <source :src="data.current['music_uri']" />-->
+<!--      </audio>-->
+    </div>
   </div>
 </template>
 
 <script setup>
-import {reactive} from "vue";
+import {onMounted, reactive} from "vue";
 import PublicApi from "../../../api/typicode";
 
 const data = reactive({
+  current: {},
   musicData: []
 })
 
-PublicApi.querySongs().then(res => {
-  data.musicData = Object.values(res).slice(0, 10)
+// PublicApi.querySongs().then(res => {
+//   data.musicData = Object.values(res).slice(0, 10)
+// })
+
+const handlePlay = (item) => {
+  data.current = item
+}
+
+onMounted(() => {
+  const video = document.getElementById('video');
+  video.addEventListener('loadedmetadata',function() {
+    video.play();
+  })
 })
+
 </script>
 
 <style scoped lang="less">
@@ -52,6 +69,7 @@ PublicApi.querySongs().then(res => {
     display: inline-block;
     box-sizing: border-box;
     text-align: center;
+    overflow: auto;
 
     .play-item {
       display: flex;
@@ -98,6 +116,10 @@ PublicApi.querySongs().then(res => {
     display: inline-block;
     box-sizing: border-box;
     border-top: 1px solid @border-color;
+
+    .audio {
+
+    }
   }
 }
 </style>

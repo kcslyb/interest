@@ -9,6 +9,8 @@
 @active-color: #52c1ff;
 @simple-color: #409eee;
 @active-background-color: #e6f7ff;
+@scrollbar-color: rgba(241,243,244);
+@scrollbar-thumb-color: #C0C4CC;
 
 .cs-border-left {
   border-left: 1px solid @border-color;
@@ -51,15 +53,15 @@
 }
 
 .cs-scrollbar {
-  //&::-webkit-scrollbar {
-  //  width: 10px;
-  //  height: 10px;
-  //  border-radius: 5px;
-  //  background-color: @border-color;
-  //}
-  //
-  //&::-webkit-scrollbar-thumb {
-  //  border-radius: 5px;
-  //  background-color: #e6e6e6;
-  //}
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background-color: @scrollbar-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: @scrollbar-thumb-color;
+  }
 }
