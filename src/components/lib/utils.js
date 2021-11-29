@@ -161,3 +161,25 @@ export function changeColor(leven = 0.3, flag, color) {
     }
     return `#${temp.join('')}`
 }
+
+/**
+ * 根据路径赋值对象属性
+ * @param obj 原对象
+ * @param path 属性路径
+ * @param value 属性值
+ * @returns {}
+ */
+export function objSetValue(obj, path, value) {
+    const temp = path.match(/\w+/g)
+    if (!temp || ((value ?? '') === '')) return obj
+    let pointer = obj
+    const length = temp.length
+    for (let i = 0; i < length; i++) {
+        if (i === length - 1) {
+            pointer[temp[i]] = value
+        } else {
+            pointer = pointer[temp[i]]
+        }
+    }
+    return obj
+}
