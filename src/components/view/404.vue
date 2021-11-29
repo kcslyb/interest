@@ -18,10 +18,7 @@ import {useRouter} from "vue-router"
 const number = "404"
 const router = useRouter()
 const goBack = () => {
-  window.history.length > 1
-      ? router.go(-1)
-      : router.push('/').catch(() => {
-      })
+  router.back()
 }
 </script>
 

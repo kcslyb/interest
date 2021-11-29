@@ -2,7 +2,7 @@ import CsLabel from './src/CsLabel'
 
 /* istanbul ignore next */
 CsLabel.install = function(Vue) {
-    Vue.component(CsLabel.name, CsLabel)
+    Vue.component('CsLabel', CsLabel)
 }
 
 export default CsLabel

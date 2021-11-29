@@ -2,12 +2,18 @@
   <div class="list-container">
     <div class="list-content" :key="`list_item_${index}`" v-for="(item, index) of options">
       <div
-          :class="['list-title', `text-${align}`]"
+          :class="[
+              'list-title',
+              `text-${align}`,
+              {'list-active': isActive(item)}]"
           @click.stop="clickItem(item)">
         {{ item[propObj.label] }}
       </div>
       <div
-          :class="['list-label', `text-${align}`]"
+          :class="[
+              'list-label',
+               `text-${align}`,
+               {'list-active': isActive(child)}]"
           :key="`list_item_child_${index}`"
           v-for="(child, index) of item[propObj.children]"
           v-show="item[propObj.children] && item[propObj.children].length"
@@ -20,9 +26,9 @@
 
 <script setup>
 
-import {reactive} from "vue";
+import {reactive, defineProps, defineEmits, computed} from "vue";
 
-defineProps({
+const props = defineProps({
   align: {
     type: String,
     default: 'left'
@@ -60,8 +66,22 @@ defineProps({
   }
 })
 
+const isActive = (item) => {
+  const {value} = props.propObj
+  return data.currentItem[value] === item[value]
+}
+
+const data = reactive({
+  currentItem: {}
+})
+
+data.currentItem = props.options.length > 0 ? props.options[0] : {}
+
+console.info(data.currentItem[props.propObj.label])
+
 const emits = defineEmits(["click-item"])
 const clickItem = (item) => {
+  data.currentItem = item
   emits('click-item', item)
 }
 
@@ -93,6 +113,10 @@ const clickItem = (item) => {
       &:hover {
         color: @simple-color;
       }
+    }
+
+    .list-active {
+      color: @active-color;
     }
   }
 }

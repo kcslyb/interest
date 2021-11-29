@@ -1,8 +1,8 @@
-import CsLoading from './src/plugin/createLoading'
+import CsLoading from './src/CsLoading.vue'
 
 /* istanbul ignore next */
 CsLoading.install = function(Vue) {
-    Vue.component(CsLoading.name, CsLoading)
+    Vue.component('CsLoading', CsLoading)
 }
 
 export default CsLoading

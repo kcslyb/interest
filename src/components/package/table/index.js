@@ -2,7 +2,7 @@ import CsTable from './src/CsTable'
 
 /* istanbul ignore next */
 CsTable.install = function(Vue) {
-    Vue.component(CsTable.name, CsTable)
+    Vue.component('CsTable', CsTable)
 }
 
-export default CsLabel
+export default CsTable

@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <div class="home-header cs-border-bottom">
-      <div class="home-header-title"><span>组件文档</span></div>
+      <div class="home-header-title">
+        <span class="animate__animated animate__bounce animate__faster">组件文档</span>
+      </div>
     </div>
     <div class="home-content">
       <div class="home-content-aside">
@@ -82,6 +84,10 @@ const handleClickItem = (item) => {
       font-size: 20px;
       line-height: 50px;
       color: @primary-color;
+      background-color: @background-color;
+      & span {
+        display: inline-block;
+      }
     }
   }
 

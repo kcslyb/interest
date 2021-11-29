@@ -1,51 +1,94 @@
-<template>
-  <div>
-    <!--    <cs-form-item :item="item" v-for="(item, index) in props.items" :key="`form_item_${index}`"></cs-form-item>-->
-    <div class="cs-form-item" v-for="(item, index) in props.items" :key="`form_item_${index}`">
-      <div class="label"></div>
-      <div class="value">
-        <cs-input
-            v-model="modelValue"
-            :item="item"/>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
-
-import {defineProps, getCurrentInstance, reactive, useAttrs} from "vue";
+<script>
+import {h, provide, reactive} from 'vue'
 import CsFormItem from "./CsFormItem.vue";
-import { shallowReactive } from '@vue/reactivity';
-import CsInput from "./items/CsInput.vue";
+import itemFactory from "./items/itemFactory";
+import {isEmpty} from "../../../lib/utils";
 
-const attrs = useAttrs()
+export default {
+  setup(props, {slots, attrs, expose}) {
+    console.info('slots:', slots)
+    console.info('attrs:', attrs)
 
-console.info(attrs.modelValue)
+    const reactData = reactive({
+      validate: false
+    })
 
-const modelValue = shallowReactive(attrs.modelValue)
+    provide('csForm', {...attrs})
 
-const {proxy} = getCurrentInstance()
-const data = reactive({
-  process: {
-    input: CsInput
-  }
-})
+    const items = attrs.items || []
 
-const props = defineProps({
-  items: {
-    type: Array,
-    required: true,
-    default: [
-      {
-        prop: 'text',
-        label: 'input'
+    // slots
+    const slotsDefaults = slots.default ? slots.default() : []
+    console.info(slotsDefaults)
+
+    function generate(modelValue) {
+      return items.map(item => {
+        return h(CsFormItem, {
+          ...item,
+          validate: reactData.validate,
+          modelValue: modelValue
+        }, {
+          default: () => itemFactory(modelValue, item)
+        })
+      })
+    }
+
+    function submit(callback) {
+      reactData.validate = true
+      slotsDefaults.map(value => value.props = Object.assign(value.props, {validate: reactData.validate}))
+      const required = []
+      const requiredMsg = []
+      items.forEach(item => {
+        checkedRequired(item, required, requiredMsg)
+      })
+      slotsDefaults.forEach(slot => {
+        checkedRequired(slot.props, required, requiredMsg)
+      })
+      const validate = required.length === 0
+      if (callback) {
+        return callback(validate, requiredMsg)
       }
-    ]
+      return new Promise((resolve, reject) => {
+        if (validate) {
+          resolve(true)
+        } else {
+          reject({validate, requiredMsg})
+        }
+      })
+    }
+
+    function checkedRequired(item, required, requiredMsg) {
+      const {modelValue} = attrs
+      const types = ['input', 'textarea']
+      if (item.required && isEmpty(modelValue[item.prop])) {
+        const text = types.includes(item.type || 'input') ? '请输入' : '请选择'
+        requiredMsg.push({
+          prop: item.prop,
+          msg: item.errorMsg || `${text}${item.label}`
+        })
+        console.error(`${text}${item.label} ---->prop: ${item.prop}`)
+        required.push(false)
+      }
+    }
+
+    // 使用expose才能用ref在外部调用
+    expose({
+      submit: submit
+    })
+
+    return () => {
+      return h('div', {
+        class: ['cs-form']
+      }, [
+        slotsDefaults,
+        ...generate(attrs.modelValue)
+      ])
+    }
   }
-})
+}
 </script>
-
-<style scoped>
-
+<style scoped lang="less">
+.cs-form {
+  text-align: left;
+}
 </style>

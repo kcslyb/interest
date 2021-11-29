@@ -17,20 +17,6 @@ export const routes = [
                 component: () => import("../components/view/example/IndexExample.vue")
             }
         ]
-    // }, {
-        // path: "/components/music",
-        // name: "music",
-        // meta: {label: 'music'},
-        // component: () => import("../components/view/music/index.vue")
-        // component: home,
-        // children: [
-        //     {
-        //         path: "/components/music",
-        //         name: "musicIndex",
-        //         meta: {label: 'music'},
-        //         component: () => import("../components/view/music/index.vue")
-        //     }
-        // ]
     }, {
         path: "/components/IndexExample",
         name: "ComponentsLabel",

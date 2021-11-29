@@ -74,6 +74,7 @@
               name="checkboxName"
               class="table-checkbox"
               :value="rowIndex"
+              :checked="props.data[rowIndex].tempCheckedFlag"
               @change="handleSelect($event, row, rowIndex)"/>
         </span>
         <span v-else :class="[
@@ -157,7 +158,7 @@ const handleSelectChange = () => {
           item[col.prop] = value[col.prop] || ''
         }
       })
-      selection.push(item)
+      selection.push({...item, ...value})
     }
   })
   if (selection.length === 0) {

@@ -1,6 +1,6 @@
 <template>
   <div class="dialog-container" :style="dialogStyleC" v-if="props.show">
-    <div class="dialog-body" :style="bodyStyleC">
+    <div class="dialog-body animate__animated animate__backInDown" :style="bodyStyleC">
       <slot name="body">
         <div class="body">
           <div class="body-title">
@@ -12,7 +12,10 @@
             </slot>
           </div>
           <div class="body-content cs-scrollbar">
-            <slot></slot>
+            <slot name="default"></slot>
+          </div>
+          <div class="body-footer" v-if="$slots.footer">
+            <slot name="footer"></slot>
           </div>
         </div>
       </slot>
@@ -108,7 +111,7 @@ const handleClose = () => {
     bottom: 0;
     left: 0;
     margin: auto;
-    background-color: white;
+    background-color: @background-color;
 
     .body {
       width: 100%;
@@ -117,6 +120,7 @@ const handleClose = () => {
       flex-direction: column;
       box-sizing: border-box;
       color: @default-color;
+      border-radius: 5px;
 
       .body-title {
         height: 50px;

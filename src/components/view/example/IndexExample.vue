@@ -1,22 +1,49 @@
 <template>
-  <div class="text-left margin-bottom">
-    <cs-label label="示例">
-      <template v-slot:right>
-        <cs-button-group :btn-list="btnList" @on-click="handleClick"></cs-button-group>
-      </template>
-    </cs-label>
+  <div>
+    <div class="text-left margin-bottom">
+      <cs-label label="示例">
+        <template v-slot:right>
+          <cs-button-group :btn-list="btnList" @on-click="handleClick"></cs-button-group>
+        </template>
+      </cs-label>
+    </div>
+    <eg-container>
+      <cs-table :is-over-hidden="false" :columns="columns" :data="data.tableData"></cs-table>
+    </eg-container>
+    <eg-container>
+      <cs-button class="margin-right" @on-click="handleClickLoading">loading</cs-button>
+      <cs-button class="margin-right" @on-click="handleClickDialog">dialog</cs-button>
+      <cs-button @on-click="handleClickNotify">notify</cs-button>
+    </eg-container>
+    <eg-container>
+      <cs-label label="form" showUnderLine>
+        <template v-slot:right>
+          <div>
+            <cs-button class="margin-right" @on-click="handleAdd">add</cs-button>
+            <cs-button class="margin-right" @on-click="handleUpdate">update</cs-button>
+            <cs-button @on-click="handleDelete">delete</cs-button>
+          </div>
+        </template>
+      </cs-label>
+      <cs-table
+          :columns="pageColumns"
+          :data="data.pageData"
+          @on-select-change="handleSelectChange">
+      </cs-table>
+    </eg-container>
+    <cs-dialog title="示例新增弹窗页" :show="data.showForm" @on-close="data.showForm = false">
+      <eg-container>
+        <cs-form
+            :items="items"
+            ref="csFormData"
+            v-model="data.formData">
+        </cs-form>
+        <div style="text-align: center">
+          <cs-button text-alin="center" @on-click="handleSubmit">submit</cs-button>
+        </div>
+      </eg-container>
+    </cs-dialog>
   </div>
-  <eg-container>
-    <cs-table :is-over-hidden="false" :columns="columns" :data="data.tableData"></cs-table>
-<!--    <cs-loading :show="true"></cs-loading>-->
-<!--    <cs-dialog :show="true">-->
-<!--    </cs-dialog>-->
-<!--    <cs-form v-model="data.formData" :items="items"></cs-form>-->
-  </eg-container>
-  <eg-container>
-    <cs-button @on-click="handleClickLoading">loading</cs-button>
-    <cs-button @on-click="handleClickDialog">dialog</cs-button>
-  </eg-container>
 </template>
 
 <script setup>
@@ -29,15 +56,18 @@ import CsDialog from "../../package/dialog/src/CsDialog.vue"
 import CsLoading from "../../package/loading/src/CsLoading.vue"
 import CsForm from "../../package/form/src/CsForm.vue"
 import EgContainer from "./components/EgContainer.vue"
+import CsFormItem from "../../package/form/src/CsFormItem.vue";
+import CsInput from "../../package/form/src/items/CsInput.vue";
 import {useRouter} from "vue-router"
-import PublicApi from "../../../api/typicode"
-import {getCurrentInstance, reactive, h} from "vue"
-import createLoading from "../../package/loading";
+import {getCurrentInstance, reactive, h, ref} from "vue"
+import LocalStorage from "../../lib/localStorage";
+
 const data = reactive({
   tableData: [],
-  formData: {
-    text: 'sdfasdf'
-  }
+  formData: {},
+  pageData: [],
+  pageSelection: [],
+  showForm: false
 })
 const columns = [
   {type: 'checkbox', width: 50},
@@ -75,20 +105,109 @@ const handleClick = (item) => {
 
 const {proxy} = getCurrentInstance()
 
-// PublicApi.querySongs().then(res => {
-//   console.info(res)
-// })
+const csFormData = ref(null)
 
-// PublicApi.postsPage(1).then(res => {
-//   data.tableData = res || []
-// })
+const handleAdd = () => {
+  data.showForm = true
+}
+
+const handleUpdate = () => {
+  data.showForm = true
+}
+
+const handleDelete = () => {
+  if (data.pageSelection.length === 1) {
+    const [temp] = data.pageSelection
+    console.info(temp)
+    LocalStorage.getInstance().deleteTableData(temp.id).then(res => {
+      proxy.$csNotify({msg: res.msg})
+      handleQueryPage()
+    }).catch(error => {
+      proxy.$csNotify({msg: error.msg})
+    })
+  } else if (data.pageSelection.length === 0) {
+    proxy.$csNotify({msg: '请勾选需要删除的数据'})
+  } else {
+    proxy.$csNotify({msg: '一次只能删除单条数据'})
+  }
+}
+
+const handleQueryPage = () => {
+  proxy.$promiseCsLoading().then(loading => {
+    LocalStorage.getInstance().queryTableDataPage({}).then(res => {
+      data.pageData = res.data
+      loading.close()
+    }).catch(() => {
+      loading.close()
+    })
+  })
+}
+handleQueryPage()
+
+const handleSubmit = () => {
+  proxy.$promiseCsLoading().then(loading => {
+    const {value} = csFormData
+    value.submit().then(res => {
+      console.info('res:', res)
+      console.info('formData:', data.formData)
+      LocalStorage.getInstance().updateTableData(data.formData).then(res => {
+        proxy.$csNotify({msg: res.msg})
+        data.showForm = false
+        handleQueryPage()
+      })
+    }).catch(e => {
+      console.error(e)
+    })
+    loading.close()
+  })
+}
+
+const handleSelectChange = (selection) => {
+  data.pageSelection = selection
+}
+
+
 const items = [
   {
-    prop: 'text',
     type: 'input',
-    label: '文本框'
+    prop: 'input',
+    label: '输入框',
+    required: true
+  }, {
+    type: 'textarea',
+    prop: 'textarea',
+    label: '文本框',
+    required: true
+  }, {
+    type: 'radio',
+    prop: 'radio',
+    propName: 'radioName',
+    label: '单选框',
+    required: true
+  }, {
+    type: 'checkbox',
+    prop: 'checkbox',
+    propName: 'checkboxName',
+    label: '多选框',
+    required: true
+  }, {
+    type: 'checkbox',
+    prop: 'checkbox2',
+    propName: 'checkbox2Name',
+    label: '多选框2',
+    required: true
   }
 ]
+
+const pageColumns = items.map(value => {
+  value = Object.assign({}, value, {type: '', prop: value.propName || value.prop})
+  return value
+})
+pageColumns.unshift({
+  width: '50',
+  type: 'checkbox',
+  label: 'checkbox',
+})
 
 const handleClickLoading = () => {
   proxy.$promiseCsLoading().then(res => {
@@ -99,9 +218,23 @@ const handleClickLoading = () => {
 }
 
 const handleClickDialog = () => {
-  proxy.$csDialog( {}, { default: () => h(EgContainer, {props: 'params'}) }).then(res => {
+  proxy.$csDialog({title: '新增'}, {
+    default: () => h(CsForm, {
+      ...{items: items, modelValue: data.formData}
+    }),
+    footer: () => h(CsButton, {
+      onOnClick: () => {
+        console.info('data')
+        console.info(data.formData)
+      }
+    }, {default: () => '保存'})
+  }).then(res => {
     console.info('$csDialog.then: ', res)
   })
+}
+
+const handleClickNotify = () => {
+  proxy.$csNotify({msg: '提示通知文本行'})
 }
 
 </script>

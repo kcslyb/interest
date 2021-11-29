@@ -41,9 +41,10 @@ const slots = useSlots()
 
 <style scoped lang="less">
 .cs-label {
-  height: 28px;
+  height: auto;
   padding: 0 5px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .cs-label:before {

@@ -11,6 +11,9 @@
 
 <script setup>
 import CsDialog from '../../dialog/src/CsDialog.vue'
+
+import {defineProps} from "vue"
+
 const bodyStyle = {
   width: 'auto',
   height: '0'
