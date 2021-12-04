@@ -5,9 +5,25 @@ const home = () => import("../components/Home.vue")
 export const routes = [
     {
         path: "/",
-        redirect: "/components/IndexExample"
+        name: "index",
+        component: import("../view/index.vue")
+    },{
+        path: "/login",
+        name: "login",
+        component: import("../view/account/login.vue")
+    },{
+        path: "/storage/account",
+        name: "storage",
+        component: import("../view/head.vue"),
+        children: [
+            {
+                path: "/storage/account",
+                name: "account",
+                component: import("../view/account/account.vue")
+            }
+        ]
     }, {
-        path: "/components",
+        path: "/components/IndexExample",
         name: "componentsIndex",
         component: home,
         children: [

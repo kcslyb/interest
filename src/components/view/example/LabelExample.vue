@@ -11,11 +11,17 @@
     </eg-container>
     <eg-container>
       <cs-label class="margin-bottom" label="示例"></cs-label>
+      <cs-label class="margin-bottom" :show-icon="false" label="不显示前缀"></cs-label>
       <cs-label class="margin-bottom" :show-icon="false" text-align="center" label="不显示前缀且居中"></cs-label>
       <cs-label class="margin-bottom" :show-under-line="true" label="显示下划线"></cs-label>
       <cs-label class="margin-bottom" :show-under-line="true" label="使用插槽(right)">
         <template v-slot:right>
           SLOT-RIGHT
+        </template>
+      </cs-label>
+      <cs-label class="margin-bottom" :show-under-line="true" label="使用插槽(icon)">
+        <template v-slot:icon>
+          <span>eg</span>
         </template>
       </cs-label>
     </eg-container>

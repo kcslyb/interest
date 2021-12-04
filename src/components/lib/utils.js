@@ -120,7 +120,7 @@ export function compareDate(oneDate, twoDate) {
     return +(one > two) || +(one === two) - 1
 }
 
-export function randomNum(maxNum = 220, minNum = 180) {
+export function randomNum(maxNum = 220, minNum = 200) {
     return Math.random() * (maxNum - minNum + 1) + minNum
 }
 
@@ -182,4 +182,45 @@ export function objSetValue(obj, path, value) {
         }
     }
     return obj
+}
+
+export function getCurrentDataTime(fmt = 'yyyy-MM-dd HH:mm:ss') {
+    return dataFormat(new Date(), fmt)
+}
+export function dataFormat(data, fmt = 'yyyy-MM-dd HH:mm:ss') {
+    const currentData = typeof data === 'object' ? data : new Date(data)
+    const o = {
+        "M+": currentData.getMonth() + 1, //月份
+        "d+": currentData.getDate(), //日
+        "h+": currentData.getHours() % 12 === 0 ? 12 : currentData.getHours() % 12, //小时
+        "H+": currentData.getHours(), //小时
+        "m+": currentData.getMinutes(), //分
+        "s+": currentData.getSeconds(), //秒
+        "q+": Math.floor((currentData.getMonth() + 3) / 3), //季度
+        "S": currentData.getMilliseconds() //毫秒
+    }
+    const week = {
+        "0": "/u65e5",
+        "1": "/u4e00",
+        "2": "/u4e8c",
+        "3": "/u4e09",
+        "4": "/u56db",
+        "5": "/u4e94",
+        "6": "/u516d"
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (currentData.getFullYear() + "").substr(4 - RegExp.$1.length))
+    }
+    if (/(E+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ?
+            (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") :
+            "") + week[currentData.getDay() + ""])
+    }
+    for (let k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ?
+                (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)))
+        }
+    }
+    return fmt
 }

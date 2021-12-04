@@ -15,7 +15,7 @@
     ></eg-container>
     <eg-container>
       <cs-label class="margin-bottom" label="示例"></cs-label>
-      <cs-tree :current-item="currentItem" :options="options"></cs-tree>
+      <cs-tree :current-item="dataObj.currentItem" :options="options" @click-node="clickNode"></cs-tree>
     </eg-container>
   </div>
 </template>
@@ -26,7 +26,9 @@ import CsLabel from '../../package/label/src/CsLabel.vue'
 import EgContainer from "./components/EgContainer.vue"
 import {reactive} from "vue"
 
-const currentItem = reactive({})
+const dataObj = reactive({
+  currentItem: {}
+})
 const options = reactive([
   {
     label: '1级标签',
@@ -113,6 +115,12 @@ const data = [
 const methodsData = [
   {name: 'on-click', description: 'node 点击事件', params: 'node data'},
 ]
+
+const clickNode = (item) => {
+  dataObj.currentItem = item
+}
+
+clickNode(options[0])
 
 </script>
 

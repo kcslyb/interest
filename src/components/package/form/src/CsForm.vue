@@ -1,14 +1,11 @@
 <script>
-import {h, provide, reactive} from 'vue'
+import {computed, h, provide, reactive} from 'vue'
 import CsFormItem from "./CsFormItem.vue";
 import itemFactory from "./items/itemFactory";
 import {isEmpty} from "../../../lib/utils";
 
 export default {
   setup(props, {slots, attrs, expose}) {
-    console.info('slots:', slots)
-    console.info('attrs:', attrs)
-
     const reactData = reactive({
       validate: false
     })
@@ -34,6 +31,7 @@ export default {
     }
 
     function submit(callback) {
+      const tempSlots = slots.default ? slots.default() : []
       reactData.validate = true
       slotsDefaults.map(value => value.props = Object.assign(value.props, {validate: reactData.validate}))
       const required = []
@@ -41,8 +39,12 @@ export default {
       items.forEach(item => {
         checkedRequired(item, required, requiredMsg)
       })
-      slotsDefaults.forEach(slot => {
-        checkedRequired(slot.props, required, requiredMsg)
+      slotsDefaults.forEach((slot, index) => {
+        slot.component.props.validate = true
+        if (tempSlots[index].props.errorMsg) {
+          slot.component.props.errorMsg = tempSlots[index].props.errorMsg
+        }
+        checkedRequired(tempSlots[index].props, required, requiredMsg)
       })
       const validate = required.length === 0
       if (callback) {
@@ -60,13 +62,14 @@ export default {
     function checkedRequired(item, required, requiredMsg) {
       const {modelValue} = attrs
       const types = ['input', 'textarea']
-      if (item.required && isEmpty(modelValue[item.prop])) {
+      const flag = (item.errorMsg && (item.required || (item.required ?? '') === ''))
+      if ((flag || (item.required || (item.required ?? '') === '') && isEmpty(modelValue[item.prop]))) {
         const text = types.includes(item.type || 'input') ? '请输入' : '请选择'
         requiredMsg.push({
           prop: item.prop,
           msg: item.errorMsg || `${text}${item.label}`
         })
-        console.error(`${text}${item.label} ---->prop: ${item.prop}`)
+        console.warn(`${text}${item.label} ---->prop: ${item.prop}`)
         required.push(false)
       }
     }
@@ -90,5 +93,6 @@ export default {
 <style scoped lang="less">
 .cs-form {
   text-align: left;
+  padding: 20px;
 }
 </style>

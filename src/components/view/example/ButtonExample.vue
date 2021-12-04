@@ -52,7 +52,7 @@
         <cs-button disabled type="text">文本</cs-button>
       </div>
       <cs-label class="margin-bottom" label="按钮组"></cs-label>
-      <div class="text-left margin-bottom">
+      <div class="text-left">
         <cs-button-group :btn-list="btnList"></cs-button-group>
       </div>
     </eg-container>

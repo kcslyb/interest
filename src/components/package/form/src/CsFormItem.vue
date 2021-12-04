@@ -11,7 +11,7 @@
       <div :class="['form-item-value', {'form-item-content_error': getShowError}]">
         <slot></slot>
       </div>
-      <span class="form-item__error error" v-show="getShowError">{{ getErrorLabel }}</span>
+      <span class="form-item__error error" v-if="getShowError">{{ getErrorLabel }}</span>
     </div>
   </div>
 </template>
@@ -73,12 +73,15 @@ const getErrorLabel = computed(() => {
 })
 
 const getShowError = computed(() => {
+  if (props.errorMsg) {
+    return (props.required || (props.required ?? '') === '') && props.validate
+  }
   const value = attrsData ? attrsData[props.prop] : csForm.modelValue[props.prop]
-  return props.required && isEmpty(value) && props.validate
+  return (props.required || (props.required ?? '') === '') && isEmpty(value) && props.validate
 })
 
 const getFormLabelWidth = computed(() => {
-  return props.labelWidth || ''
+  return props.labelWidth || csForm['label-width'] || ''
 })
 
 </script>
@@ -88,6 +91,7 @@ const getFormLabelWidth = computed(() => {
   display: flex;
   flex-direction: column;
   position: relative;
+  flex-grow: 1;
 }
 
 .form-item__error {

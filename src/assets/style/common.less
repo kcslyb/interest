@@ -19,25 +19,49 @@
 @cs-d08-color: var(--d08-color, #5e6d82);
 @cs-d09-color: var(--d09-color, #5e6d82);
 
+@info-color: @cs-sd-color;
+@warning-color: #CD853F;
+@error-color: #FF0000;
+@primary-color: #1E90FF;
+
 @deep-border-color:@cs-d06-color;
 @default-color: @cs-d06-color;
 @border-color: @cs-d02-color;
 @text-color: @cs-d02-color;
-@info-color: @cs-d04-color;
-@warning-color: @cs-d06-color;
-@error-color: @cs-d08-color;
-@primary-color: @cs-d08-color;
-@active-color: @cs-d08-color;
-@deep-active-color: @cs-d06-color;
+@active-color:@cs-d09-color;
+@deep-active-color: @cs-d05-color;
 @simple-color:@cs-d08-color;
-@background-color: @cs-s06-color;
+@background-color: @cs-s08-color;
 @deep-background-color: @cs-s04-color;
-@active-background-color: @cs-d05-color;
-@scrollbar-color: @cs-s06-color;
-@scrollbar-thumb-color: @cs-s06-color;
+@active-background-color: @cs-s04-color;
+@scrollbar-color: @cs-s08-color;
+@scrollbar-thumb-color: @cs-s08-color;
 
-.cs-03filter-background-color {
+.cs-background-color {
+  background-color: @background-color
+}
 
+.cs-deep-background-color {
+ background-color: @deep-background-color
+}
+
+.cs-box-shadow {
+  box-shadow: 0 2px 4px 0 @background-color;
+}
+.cs-box-shadow-deep {
+  box-shadow: 0 2px 4px 0 @deep-background-color;
+}
+
+.cs-pointer {
+  cursor: pointer;
+}
+
+.cs-padding-top20 {
+  padding-top: 20px;
+}
+
+.cs-padding-bottom20 {
+  padding-bottom: 20px;
 }
 
 .cs-border-left {
@@ -107,7 +131,7 @@
 }
 
 .cs-form-item {
-  width: auto;
+  width: 100%;
   font-size: 16px;
   align-items: center;
   display: inline-flex;
@@ -148,11 +172,12 @@
   background:none;
   outline:none;
   padding: 9px;
-  width: auto;
-  height: 15px;
+  width: 100%;
   line-height: 15px;
   border-radius: 5px;
   border: 1px solid @border-color;
+  box-sizing: border-box;
+  display: inline-block;
 
   &::-webkit-scrollbar {
     width: 10px;

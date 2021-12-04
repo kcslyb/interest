@@ -4,11 +4,11 @@
       :class="['notify', 'animate__animated', 'animate__backInDown', `notify-${props.type}`]"
       @mouseover="handleMouseOver"
       @mouseleave="handleMouseLeave">
-    <div class="content">
-      <div class="content-title">{{ props.title }}</div>
-      <div class="content-msg">{{ props.msg }}</div>
+    <div :class="['content']">
+      <div :class="['content-title', `notify-${props.type}`]">{{ props.title }}</div>
+      <div :class="['content-msg', `notify-${props.type}`]">{{ props.msg }}</div>
     </div>
-    <div class="close" @click="handleClose">X</div>
+    <div :class="['close', `notify-${props.type}`]" @click="handleClose">X</div>
   </div>
 </template>
 
@@ -44,20 +44,24 @@ const handleMouseLeave = () => {
 <style scoped lang="less">
 
 .notify-default {
-  border: 1px solid @default-color;
+  color: @default-color;
 }
 
-.notify-info {
-  border: 1px solid @border-color;
+.notify-error {
+  color: @error-color;
+}
+
+.notify-warning {
+  color: @warning-color;
 }
 
 .notify {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  border-radius: 5px;
+  top: 12px;
+  right: 12px;
   width: 20%;
-  background-color: @background-color;
+  border-radius: 5px;
+  background-color: @cs-sd-color;
 
   .content {
     font-size: 14px;
@@ -88,10 +92,9 @@ const handleMouseLeave = () => {
 
   .close {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 12px;
     cursor: pointer;
-    color: @default-color;
   }
 }
 </style>

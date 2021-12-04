@@ -39,7 +39,6 @@ export default {
                             ...data,
                             onOnClose: (res) => {
                                 close()
-                                resolve(res)
                                 console.info('close')
                             }
                         }, {...slots})
@@ -50,6 +49,7 @@ export default {
                         vm.el.style.opacity = 0
                         const { timeout } = temp
                         animationOpacityShow(div, timeout)
+                        resolve(vm)
                     } catch (e) {
                         reject(e)
                     }

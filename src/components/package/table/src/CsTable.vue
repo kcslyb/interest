@@ -1,6 +1,6 @@
 <template>
   <div id="tableContainer" ref="container" class="text-container cs-scrollbar">
-    <div class="text-title" :style="{width: `${proxy.rowWidth}px`}">
+    <div class="text-title cs-deep-background-color" :style="{width: `${proxy.rowWidth}px`}">
       <span
           v-show="_columns.length > 0"
           :class="[
@@ -21,7 +21,7 @@
              ]">
           <input
               type="checkbox"
-              id="titleCheckbox"
+              :id="titleCheckboxId"
               class="table-checkbox"
               :name="index"
               :value="index"
@@ -71,7 +71,7 @@
              ]">
           <input
               type="checkbox"
-              name="checkboxName"
+              :name="checkboxName"
               class="table-checkbox"
               :value="rowIndex"
               :checked="props.data[rowIndex].tempCheckedFlag"
@@ -94,11 +94,14 @@
 
 <script setup>
 import {defineProps, onMounted, getCurrentInstance, ref, computed, reactive} from 'vue'
+import {generateRandom} from '../../../lib/utils'
 
 let span = ref(0)
 let width = ref(0)
 let rowWidth = ref(0)
 let _columns = reactive(props.columns)
+const checkboxName = generateRandom()
+const titleCheckboxId = generateRandom()
 
 const { proxy } = getCurrentInstance()
 
@@ -136,7 +139,7 @@ const handleSelectAll = (e) => {
   if (rowDisabled.value) {
     return false
   }
-  const checkbox = document.getElementsByName('checkboxName')
+  const checkbox = document.getElementsByName(checkboxName)
   checkbox.forEach(value => value.checked = e.target.checked)
   console.info('handleSelectAll', e.target.checked)
   props.data.map(value => {
@@ -161,13 +164,8 @@ const handleSelectChange = () => {
       selection.push({...item, ...value})
     }
   })
-  if (selection.length === 0) {
-    const dom = document.getElementById('titleCheckbox')
-    dom.checked = false
-  } else if (selection.length === props.data.length) {
-    const dom = document.getElementById('titleCheckbox')
-    dom.checked = true
-  }
+  const dom = document.getElementById(titleCheckboxId)
+  dom.checked = selection.length !== 0
   console.info('on-select-change', selection)
   emits('on-select-change', selection)
 }

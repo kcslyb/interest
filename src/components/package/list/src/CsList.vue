@@ -98,6 +98,7 @@ const clickItem = (item) => {
       font-size: 16px;
       padding: 10px 5px;
       cursor: pointer;
+      border-radius: 3px;
 
       &:hover {
         color: @simple-color;
@@ -109,6 +110,7 @@ const clickItem = (item) => {
       padding: 10px 5px;
       color: @default-color;
       cursor: pointer;
+      border-radius: 3px;
 
       &:hover {
         color: @simple-color;
@@ -117,6 +119,7 @@ const clickItem = (item) => {
 
     .list-active {
       color: @active-color;
+      background-color: @active-background-color;
     }
   }
 }

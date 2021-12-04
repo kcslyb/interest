@@ -5,7 +5,6 @@
           type="checkbox"
           :class="[
               'checkbox',
-              'cs-input-content',
               {
                 'cs-disabled': getFormDisabled
               }

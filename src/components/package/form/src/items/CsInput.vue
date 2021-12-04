@@ -6,6 +6,7 @@
             'cs-disabled': getFormDisabled
           }
       ]"
+      :type="getInputType"
       :placeholder="getFormItemLabel"
       v-model="attrsData"
   />
@@ -27,6 +28,10 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  inputType: {
+    type: String,
+    default: 'input'
   }
 })
 
@@ -50,6 +55,10 @@ const getFormItemLabel = computed(() => {
     return `请输入${csFormItem && csFormItem.getLabel}`
   }
   return props.placeholder
+})
+
+const getInputType = computed(() => {
+  return props.inputType
 })
 
 </script>

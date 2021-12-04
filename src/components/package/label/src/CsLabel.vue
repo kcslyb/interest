@@ -2,16 +2,17 @@
   <div
       :class="[
           'cs-label',
-          `text-${textAlign}`,
            {'cs-label-bottom': showUnderLine}
            ]">
     <div :class="{'cs-label-container': slots.right}">
-      <div>
+      <div :class="[`text-${textAlign}`]">
         <div class="label-icon-container">
           <slot name="icon">
             <span v-if="slots.icon || showIcon" class="label-icon discount"></span>
           </slot>
-          <span :class="['cs-label-text']">{{ label }}</span>
+          <div class="label-content">
+            <span :class="['cs-label-text']">{{ label }}</span>
+          </div>
         </div>
       </div>
       <slot name="right"/>
@@ -60,21 +61,26 @@ const slots = useSlots()
 .label-icon-container {
   width: 100%;
   display: inline-flex;
+  align-items: center;
+
+  .label-content {
+    margin-left: 10px;
+    flex-grow: 1;
+  }
 }
 
 .label-icon {
-  color: #fff;
-  width: 6px;
   height: 6px;
   position: relative;
   text-align: center;
   margin-right: 5px;
-  //transform: translateY(4px);
+
   &:after {
     position: absolute;
     content: "";
     left: 0;
-    top: 100%;
+    top: -50%;
+    height: 6px;
     border-style: solid;
     border-width: 3px;
   }

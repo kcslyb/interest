@@ -5,7 +5,6 @@
           type="radio"
           :class="[
               'radio',
-              'cs-input-content',
               {
                 'cs-disabled': getFormDisabled
               }

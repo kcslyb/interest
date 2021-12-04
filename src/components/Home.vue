@@ -2,6 +2,7 @@
   <div class="home">
     <div class="home-header cs-border-bottom">
       <div class="home-header-title">
+        <img class="logo cs-pointer" src="../assets/logo.png" @click="handleLogoClick"/>
         <span class="animate__animated animate__bounce animate__faster">组件文档</span>
       </div>
     </div>
@@ -60,6 +61,10 @@ const handleClickItem = (item) => {
   router.push(item.path)
 }
 
+const handleLogoClick = () => {
+  router.push('/')
+}
+
 </script>
 
 <style scoped lang="less">
@@ -76,15 +81,22 @@ const handleClickItem = (item) => {
     height: 50px;
     width: 1140px;
     display: inline-block;
-    background: white;
 
     .home-header-title {
       text-align: left;
       font-weight: bold;
       font-size: 20px;
       line-height: 50px;
-      color: @primary-color;
+      color: @default-color;
       background-color: @background-color;
+      display: flex;
+      align-items: center;
+
+      .logo {
+        height: 50px;
+        background-color: transparent;
+      }
+
       & span {
         display: inline-block;
       }
