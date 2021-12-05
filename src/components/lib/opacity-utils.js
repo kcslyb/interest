@@ -1,4 +1,4 @@
-export function animationOpacityClose (node, parentNode, timeout = 50) {
+export function animationOpacityClose (node, parentNode, timeout = 50, callback) {
     if (node && parentNode) {
         let opacity = 10
         const timer = setInterval(function () {
@@ -7,6 +7,7 @@ export function animationOpacityClose (node, parentNode, timeout = 50) {
             if (opacity === 0) {
                 clearInterval(timer)
                 parentNode.removeChild(node)
+                callback && callback()
             }
         }, timeout)
     }

@@ -1,4 +1,5 @@
 import {generateRandom, isEmpty, typeJudge} from "./utils"
+import CryptoUtils from "./crypto-utils";
 
 class LocalStorage {
     constructor() {
@@ -13,19 +14,24 @@ class LocalStorage {
         if (typeJudge(key) !== 'String') {
             throw TypeError(`LocalStorage: saveKeyValue key type not String`)
         }
+        let temp = data
         if (typeJudge(data) !== 'String') {
-            const temp = JSON.stringify(data)
-            localStorage.setItem(key, temp)
-        } else {
-            localStorage.setItem(key, data)
+            temp = JSON.stringify(data)
         }
+        localStorage.setItem(CryptoUtils.encrypt(key), CryptoUtils.encrypt(temp))
     }
     getItem(key) {
-        const temp = localStorage.getItem(key) || ''
-        return isEmpty(temp) ? '' : JSON.parse(temp)
+        if (isEmpty(key)) {
+            throw TypeError(`LocalStorage: getItem key is not valid`)
+        }
+        const temp = localStorage.getItem(CryptoUtils.encrypt(key)) || ''
+        if (isEmpty(temp)) {
+            return ''
+        }
+        return CryptoUtils.decrypt(temp)
     }
     removeItem(key) {
-        localStorage.removeItem(key)
+        localStorage.removeItem(CryptoUtils.encrypt(key))
     }
     updateTableData(data, prop = 'id', keyName = 'tableData') {
         return new Promise((resolve, inject) => {

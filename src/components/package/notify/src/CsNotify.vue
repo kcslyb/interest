@@ -8,7 +8,7 @@
       <div :class="['content-title', `notify-${props.type}`]">{{ props.title }}</div>
       <div :class="['content-msg', `notify-${props.type}`]">{{ props.msg }}</div>
     </div>
-    <div :class="['close', `notify-${props.type}`]" @click="handleClose">X</div>
+    <div :class="['close', `notify-${props.type}`]" @click="handleClose">×</div>
   </div>
 </template>
 
@@ -95,6 +95,11 @@ const handleMouseLeave = () => {
     top: 8px;
     right: 12px;
     cursor: pointer;
+    display: inline-block;
+    font-size: 22px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
 }
 </style>

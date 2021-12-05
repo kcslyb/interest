@@ -6,7 +6,10 @@
         <span class="animate__animated animate__bounce animate__faster">本地存储</span>
       </div>
       <div class="header-right">
-        kcs
+        <div class="right-opt">
+          <span>{{data.userInfo.userName}}</span>
+          <span @click="handleLoginOut">退出</span>
+        </div>
       </div>
     </div>
     <div class="home-content">
@@ -18,12 +21,36 @@
 <script setup>
 
 import {useRouter} from "vue-router";
+import CsStorage from "../storage/cs-storage";
+import {reactive} from "vue";
 
 const router = useRouter()
 
-const handleLogoClick = () => {
-  router.push('/')
+const data = reactive({
+  userInfo: {}
+})
+
+const queryUserInfo = () => {
+  CsStorage.getInstance('USERINFO').queryPage({}).then(res => {
+    const temp = res.data.data || []
+    if (temp.length) {
+      data.userInfo = temp[0]
+    }
+  })
 }
+
+queryUserInfo()
+
+const handleLogoClick = () => {
+  router.push('/').catch(e => console.error(e))
+}
+
+const handleLoginOut = () => {
+  CsStorage.getInstance('USERINFO').deleteAll().then(() => {
+    handleLogoClick()
+  })
+}
+
 </script>
 
 <style scoped lang="less">
@@ -67,6 +94,23 @@ const handleLogoClick = () => {
     .header-right {
       display: inline-block;
       padding-right: 20px;
+
+      .right-opt {
+        display: flex;
+        align-items: center;
+
+        & span {
+          width: auto;
+          padding-left: 20px;
+          display: inline-block;
+          white-space:nowrap;
+          cursor: pointer;
+
+          &:hover {
+            color: @active-color;
+          }
+        }
+      }
     }
   }
 

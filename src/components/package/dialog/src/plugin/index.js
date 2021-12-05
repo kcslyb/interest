@@ -3,6 +3,7 @@
 import {reactive, render, h} from 'vue'
 import CsDialog from '../CsDialog.vue'
 import {animationOpacityClose, animationOpacityShow} from "../../../../lib/opacity-utils";
+import {typeJudge} from "../../../../lib/utils";
 
 export default {
     install: (app) => {
@@ -28,18 +29,21 @@ export default {
                             show: true
                         })
 
-                        function close() {
-                            data.show = false
+                        function close(callback) {
                             const { timeout } = temp
                             const parentNode = vm.el.parentNode
-                            animationOpacityClose(parentNode, parentNode.parentNode, timeout)
+                            animationOpacityClose(parentNode, parentNode.parentNode, timeout, () => {
+                                data.show = false
+                                console.info('start run callback')
+                                callback && typeJudge(callback) ==='Function' && callback()
+                            })
                         }
 
                         const vm = h(CsDialog, {
                             ...data,
-                            onOnClose: (res) => {
-                                close()
-                                console.info('close')
+                            onOnClose: (callback) => {
+                                console.info('CsDialog will close')
+                                close(callback)
                             }
                         }, {...slots})
                         const div = document.createElement('div')
@@ -49,7 +53,8 @@ export default {
                         vm.el.style.opacity = 0
                         const { timeout } = temp
                         animationOpacityShow(div, timeout)
-                        resolve(vm)
+                        const ctx = vm.component.ctx
+                        resolve(ctx)
                     } catch (e) {
                         reject(e)
                     }

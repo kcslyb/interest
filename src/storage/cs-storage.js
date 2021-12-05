@@ -8,7 +8,7 @@ class CsStorage {
     }
 
     static getInstance(tableName) {
-        if (!CsStorage.instance) {
+        if (!CsStorage.instance || CsStorage.instance.tableName !== tableName) {
             CsStorage.instance = new CsStorage(tableName)
         }
         return CsStorage.instance
@@ -57,6 +57,17 @@ class CsStorage {
                 }
                 this.serve.setItem(this.tableName, result)
                 resolve({code: 200, msg: id})
+            } catch (e) {
+                reject({code: 500, msg: e})
+            }
+        })
+    }
+
+    deleteAll() {
+        return new Promise((resolve, reject) => {
+            try {
+                this.serve.removeItem(this.tableName)
+                resolve({code: 200})
             } catch (e) {
                 reject({code: 500, msg: e})
             }

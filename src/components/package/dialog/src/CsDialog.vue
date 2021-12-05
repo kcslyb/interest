@@ -7,7 +7,7 @@
             <slot name="body-title">
               <div class="title cs-deep-background-color">
                 <span class="title-text">{{ props.title }}</span>
-                <span v-if="props.showClose" class="title-icon" @click.stop="handleClose">x</span>
+                <span v-if="props.showClose" class="title-icon" @click.stop="handleClose">×</span>
               </div>
             </slot>
           </div>
@@ -92,8 +92,8 @@ const emits = defineEmits(['on-click', 'on-close'])
 const handleClick = (item) => {
   emits('on-click', item)
 }
-const handleClose = () => {
-  emits('on-close')
+const handleClose = (callback) => {
+  emits('on-close', callback)
 }
 
 </script>

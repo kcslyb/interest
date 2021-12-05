@@ -41,9 +41,7 @@ export default {
       })
       slotsDefaults.forEach((slot, index) => {
         slot.component.props.validate = true
-        if (tempSlots[index].props.errorMsg) {
-          slot.component.props.errorMsg = tempSlots[index].props.errorMsg
-        }
+        slot.component.props.errorMsg = tempSlots[index].props.errorMsg
         checkedRequired(tempSlots[index].props, required, requiredMsg)
       })
       const validate = required.length === 0

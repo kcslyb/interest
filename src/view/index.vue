@@ -14,7 +14,7 @@
             </div>
           </div>
           <div class="footer">
-            <div class="custom-font" @click.stop="handleToLogin">登录\注册</div>
+            <div class="custom-font" @click.stop="handleToLogin">登录\注册（本地存储系统）</div>
           </div>
         </div>
       </slot>
