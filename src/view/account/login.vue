@@ -74,10 +74,16 @@ const handleUserNameChange = () => {
 }
 
 const changePassword = (password) => {
-  return  CryptoUtils.MD5(password)
+  return CryptoUtils.MD5(password)
 }
 
 const handlePasswordChange = () => {
+  if (!data.userDto.userName) {
+    data.userNameMsg = ''
+    const {value} = userForm
+    value.submit()
+    return
+  }
   if (!data.userDto.password) {
     data.passwordMsg = ''
     const {value} = userForm
@@ -85,7 +91,7 @@ const handlePasswordChange = () => {
     return
   }
   const csStorageServe = CsStorage.getInstance(TABLE.ACCOUNT)
-  csStorageServe.queryPage({password: changePassword(data.userDto.password)}).then((res) => {
+  csStorageServe.queryPage({...data.userDto, password: changePassword(data.userDto.password)}).then((res) => {
     const flag = res.code === 200 && res.data.length === 0
     if (data.isLogin) {
       data.passwordMsg = (flag ? '密码错误' : '')
@@ -110,7 +116,7 @@ const handleLogin = () => {
   value.submit().then(() => {
     const csStorageServe = CsStorage.getInstance(TABLE.ACCOUNT)
     if (!data.isLogin) {
-      csStorageServe.save(data.userDto).then((res) => {
+      csStorageServe.save({...data.userDto, password: changePassword(data.userDto.password)}).then((res) => {
         if (res.code === 200) {
           proxy.$csNotify({msg: '注册成功'})
         }

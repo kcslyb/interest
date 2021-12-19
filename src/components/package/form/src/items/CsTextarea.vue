@@ -8,14 +8,14 @@
           }
       ]"
       :placeholder="getFormItemLabel"
-      v-model="attrsData"
+      :value="attrs.modelValue"
+      @input="handleInput"
   />
 </template>
 
 <script setup>
 import {computed, defineProps, inject, useAttrs} from "vue";
-import {shallowReactive} from "@vue/reactivity";
-import {hasNotProperty, isEmpty} from "../../../../lib/utils";
+import {isEmpty} from "../../../../lib/utils";
 
 const props = defineProps({
   placeholder: {
@@ -33,8 +33,6 @@ const props = defineProps({
 })
 
 const attrs = useAttrs()
-
-const attrsData = shallowReactive(attrs.modelValue)
 
 const csForm = inject('csForm')
 const csFormItem = inject('csFormItem')
@@ -56,6 +54,12 @@ const getFormItemLabel = computed(() => {
   }
   return props.placeholder
 })
+
+const emits = defineEmits(['update:modelValue'])
+
+const handleInput = (e) => {
+  emits('update:modelValue', e.target.value)
+}
 
 </script>
 

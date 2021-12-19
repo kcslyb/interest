@@ -2,7 +2,7 @@
   <div class="dialog-container" :style="dialogStyleC" v-if="props.show">
     <div class="dialog-body animate__animated animate__backInDown" :style="bodyStyleC">
       <slot name="body">
-        <div class="body" ref="body">
+        <div class="body">
           <div class="body-title">
             <slot name="body-title">
               <div class="title cs-deep-background-color">

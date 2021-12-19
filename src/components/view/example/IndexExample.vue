@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="text-left margin-bottom">
+      <cs-quill></cs-quill>
+    </div>
+    <div class="text-left margin-bottom">
       <cs-label label="示例">
         <template v-slot:right>
           <cs-button-group :btn-list="btnList" @on-click="handleClick"></cs-button-group>
@@ -10,7 +13,7 @@
     <eg-container>
       <cs-table :is-over-hidden="false" :columns="columns" :data="data.tableData"></cs-table>
     </eg-container>
-    <eg-container>
+    <eg-container :content="getContent">
       <cs-button class="margin-right" @on-click="handleClickLoading">loading</cs-button>
       <cs-button class="margin-right" @on-click="handleClickDialog">dialog</cs-button>
       <cs-button @on-click="handleClickNotify">notify</cs-button>
@@ -50,6 +53,7 @@
 import {routes} from "../../../route"
 import CsButtonGroup from "../../package/button/src/CsButtonGroup.vue"
 import CsButton from "../../package/button/src/CsButton.vue"
+import CsQuill from "../../package/quill/src/CsQuill.vue"
 import CsTable from "../../package/table/src/CsTable.vue"
 import CsLabel from "../../package/label/src/CsLabel.vue"
 import CsDialog from "../../package/dialog/src/CsDialog.vue"
@@ -236,6 +240,34 @@ const handleClickDialog = () => {
 const handleClickNotify = () => {
   proxy.$csNotify({msg: '提示通知文本行'})
 }
+
+const getContent = `const handleClickLoading = () => {
+  proxy.$promiseCsLoading().then(res => {
+    setTimeout(() => {
+      res.close()
+    }, 1000)
+  })
+}
+
+const handleClickDialog = () => {
+  proxy.$csDialog({title: '新增'}, {
+    default: () => h(CsForm, {
+      ...{items: items, modelValue: data.formData}
+    }),
+    footer: () => h(CsButton, {
+      onOnClick: () => {
+        console.info('data')
+        console.info(data.formData)
+      }
+    }, {default: () => '保存'})
+  }).then(res => {
+    console.info('$csDialog.then: ', res)
+  })
+}
+
+const handleClickNotify = () => {
+  proxy.$csNotify({msg: '提示通知文本行'})
+}`
 
 </script>
 

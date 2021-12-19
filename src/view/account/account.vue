@@ -104,7 +104,7 @@ const handleBtnClick = (item) => {
       const formData = h(CsForm, {
         ...{items: items, modelValue: data.formData, 'label-width': '80px'}
       })
-      proxy.$csDialog({title: '新增账号'}, {
+      proxy.$csDialog({title: '新增账号', width: 30}, {
         default: () => formData,
         footer: () => h(CsButton, {
           onOnClick: () => {
@@ -127,9 +127,9 @@ const handleBtnClick = (item) => {
             })
           }
         }, {default: () => '保存'})
-      }).then(ctx => {
-        // dialog ctx
-        dialogCtx = ctx
+      }).then(proxy => {
+        // dialog proxy
+        dialogCtx = proxy
       })
     },
     warning: () => {

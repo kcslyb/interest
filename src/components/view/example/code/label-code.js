@@ -1,9 +1,10 @@
-<template>
+const labelCode =
+`<template>
   <div>
     <div class="margin-bottom">
       <cs-label label="标签组件"></cs-label>
     </div>
-    <eg-container :content="labelCode">
+    <eg-container>
       <cs-label class="margin-bottom" label="示例"></cs-label>
       <cs-label class="margin-bottom" :show-icon="false" label="不显示前缀"></cs-label>
       <cs-label class="margin-bottom" :show-icon="false" text-align="center" label="不显示前缀且居中"></cs-label>
@@ -32,7 +33,6 @@
 import CsLabel from '../../package/label/src/CsLabel.vue'
 import CsTable from '../../package/table/src/CsTable.vue'
 import EgContainer from "./components/EgContainer.vue"
-import labelCode from "./code/label-code"
 const slotColumns = [
   {label: 'name', prop: 'name'},
   {label: '说明', prop: 'description'},
@@ -50,3 +50,5 @@ const slotData = [
 
 <style scoped>
 </style>
+`
+export default labelCode

@@ -1,20 +1,25 @@
 <template>
   <div class="eg-container">
-    <slot>
-      <div class="label">
-        <cs-label :label="label"></cs-label>
-      </div>
-      <cs-table :data="data" :columns="tableColumns" :is-over-hidden="false"></cs-table>
-    </slot>
+    <div class="eg-content">
+      <slot>
+        <div class="label">
+          <cs-label :label="label"></cs-label>
+        </div>
+        <cs-table :data="data" :columns="tableColumns" :is-over-hidden="false"></cs-table>
+      </slot>
+    </div>
+    <code-container v-if="content" :content="props.content">
+    </code-container>
   </div>
 </template>
 
 <script setup>
 import CsLabel from '../../../package/label/src/CsLabel.vue'
 import CsTable from '../../../package/table/src/CsTable.vue'
+import CodeContainer from "./CodeContainer.vue"
 import {defineProps} from "vue"
 
-const props =defineProps({
+const props = defineProps({
   type: {
     type: String,
     default: ''
@@ -22,6 +27,10 @@ const props =defineProps({
   label: {
     type: String,
     default: '基础用法（属性：label；text-align；show-under-line；showIcon）'
+  },
+  content: {
+    type: String,
+    default: ''
   },
   columns: {
     type: Array,
@@ -100,8 +109,13 @@ const tableColumns = props.type ? process[props.type] : props.columns
   transition: .2s;
   margin-bottom: 24px;
   padding: 15px;
-  .label {
-    padding-bottom: 10px;
+
+  .eg-content {
+    margin-bottom: 20px;
+
+    .label {
+      padding-bottom: 10px;
+    }
   }
 }
 </style>

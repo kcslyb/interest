@@ -187,6 +187,7 @@ export function objSetValue(obj, path, value) {
 export function getCurrentDataTime(fmt = 'yyyy-MM-dd HH:mm:ss') {
     return dataFormat(new Date(), fmt)
 }
+
 export function dataFormat(data, fmt = 'yyyy-MM-dd HH:mm:ss') {
     const currentData = typeof data === 'object' ? data : new Date(data)
     const o = {

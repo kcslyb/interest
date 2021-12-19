@@ -1,4 +1,4 @@
-import {createRouter, createWebHashHistory} from "vue-router"
+import {createRouter, createWebHistory} from "vue-router"
 
 const home = () => import("../components/Home.vue")
 
@@ -6,20 +6,20 @@ export const routes = [
     {
         path: "/",
         name: "index",
-        component: import("../view/index.vue")
+        component: () => import("../view/index.vue")
     },{
         path: "/login",
         name: "login",
-        component: import("../view/account/login.vue")
+        component: () => import("../view/account/login.vue")
     },{
         path: "/storage/account",
         name: "storage",
-        component: import("../view/head.vue"),
+        component: () => import("../view/head.vue"),
         children: [
             {
                 path: "/storage/account",
                 name: "account",
-                component: import("../view/account/account.vue")
+                component: () => import("../view/account/account.vue")
             }
         ]
     }, {
@@ -93,6 +93,6 @@ export const routes = [
 ]
 
 export const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: routes
 })
