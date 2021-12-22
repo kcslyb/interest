@@ -25,6 +25,8 @@
 <script setup>
 import CsDialog from "../components/package/dialog/src/CsDialog.vue"
 import {useRouter} from "vue-router"
+import {QUERY_BALL} from "../store/mutation-types";
+import {storeDispatch} from "../store/utils";
 
 const router = useRouter()
 
@@ -39,6 +41,8 @@ const handleToLogin = () => {
 const handleClick = (item) => {
   router.push(item.path).catch(e => console.error(e))
 }
+
+storeDispatch(`number/${QUERY_BALL}`)
 
 </script>
 

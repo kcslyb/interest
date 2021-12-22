@@ -178,6 +178,10 @@ export function objSetValue(obj, path, value) {
         if (i === length - 1) {
             pointer[temp[i]] = value
         } else {
+            if (isEmpty(pointer[temp[i]])) {
+                const flag = temp[i + 1].match(/^\d+$/)
+                pointer[temp[i]] = flag ? [] : {}
+            }
             pointer = pointer[temp[i]]
         }
     }
