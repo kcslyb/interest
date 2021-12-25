@@ -26,17 +26,20 @@
 </template>
 
 <script setup>
-import Index from "../index.vue";
-import CsButton from "../../components/package/button";
-import CsForm from "../../components/package/form/src/CsForm.vue";
-import CsInput from "../../components/package/form/src/items/CsInput.vue";
-import CsFormItem from "../../components/package/form/src/CsFormItem.vue";
+import Index from "../../index.vue";
+import CsButton from "../../../components/package/button";
+import CsForm from "../../../components/package/form/src/CsForm.vue";
+import CsInput from "../../../components/package/form/src/items/CsInput.vue";
+import CsFormItem from "../../../components/package/form/src/CsFormItem.vue";
 import {getCurrentInstance, reactive, ref} from "vue";
-import TABLE from "../../storage/table";
-import CsStorage from "../../storage/cs-storage";
+import TABLE from "../../../storage/table";
+import CsStorage from "../../../storage/cs-storage";
 import {useRouter} from "vue-router";
-import CryptoUtils from "../../components/lib/crypto-utils";
+import CryptoUtils from "../../../components/lib/crypto-utils";
+import {mapActions, useStore} from "vuex";
+import {QUERY_ACCOUNT, QUERY_ROUTER} from "../../../store/mutation-types";
 
+const state = useStore()
 const userForm = ref(null)
 
 const data = reactive({
@@ -130,9 +133,11 @@ const handleLogin = () => {
         value.submit()
         if (!flag) {
           const [user] = res.data.data
-          console.info(user)
           CsStorage.getInstance('USERINFO').save(user).then(() => {
-            router.push('/storage/account').catch(e => console.error(e))
+            mapActions([`account/${QUERY_ACCOUNT}`])[`account/${QUERY_ACCOUNT}`].call({$store: state})
+                .then(() => {
+                  router.push('/interest/home').catch(e => console.error(e))
+            })
           })
         }
       })

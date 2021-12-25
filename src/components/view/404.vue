@@ -7,7 +7,7 @@
           <h4> Now Go Back Using Below LInk</h4>
         </a>
       </div>
-      <span id="error-link">{{ number }}</span>
+      <span id="error-link">{{ account }}</span>
       <h2>! ERROR DECETED !</h2>
     </div>
   </div>
@@ -15,7 +15,7 @@
 
 <script setup>
 import {useRouter} from "vue-router"
-const number = "404"
+const account = "404"
 const router = useRouter()
 const goBack = () => {
   router.back()

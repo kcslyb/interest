@@ -8,7 +8,7 @@
     </div>
     <div class="home-content">
       <div class="home-content-aside">
-        <cs-list :options="menus" @click-item="handleClickItem"></cs-list>
+        <cs-list :prop-obj="propObj" :options="menus" @click-item="handleClickItem"></cs-list>
       </div>
       <div class="home-content-right cs-scrollbar">
         <router-view/>
@@ -18,43 +18,24 @@
 </template>
 
 <script setup>
-import {reactive} from 'vue'
+import {computed} from 'vue'
 import {useRouter} from "vue-router"
 import CsLabel from '../components/package/label/src/CsLabel.vue'
 import CsList from "../components/package/list/src/CsList.vue"
 import {routes} from "../route";
 
-const initMenuTree = () => {
-  const menus = []
-  routes.forEach((value, index) => {
-    if (value.meta) {
-      const children = []
-      const temp = value.children || []
-      temp.forEach((val, i) => {
-        children.push({
-          value: `menu_key_${index}_${i}}`,
-          label: val.meta.label,
-          path: val.path,
-          children: []
-        })
-      })
-      const findIndex = menus.findIndex(v => v.label === value.meta.label)
-      if (findIndex > -1) {
-        menus[findIndex].children = menus[findIndex].children.concat(children)
-      } else {
-        menus.push({
-          value: `menu_key_${index}`,
-          label: value.meta.label,
-          path: value.path,
-          children: children
-        })
-      }
-    }
-  })
-  return menus
-}
+const state = useStore()
+import {mapActions, mapGetters, useStore} from "vuex";
+import {QUERY_ROUTER} from "../store/mutation-types";
 
-const menus = initMenuTree()
+mapActions([`router/${QUERY_ROUTER}`])[`router/${QUERY_ROUTER}`].call({$store: state})
+const routers = computed(mapGetters([`router/${QUERY_ROUTER}`])[`router/${QUERY_ROUTER}`].bind({$store: state}))
+const menus = routers.value.filter(value => value.name === 'components')
+const propObj = {
+  value: 'name',
+  label: 'meta.label',
+  children: 'children'
+}
 
 const router = useRouter()
 const handleClickItem = (item) => {

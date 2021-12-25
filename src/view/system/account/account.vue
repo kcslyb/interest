@@ -16,19 +16,19 @@
 </template>
 
 <script setup>
-import CsForm from "../../components/package/form/src/CsForm.vue";
-import CsTable from "../../components/package/table/src/CsTable.vue"
-import CsLabel from "../../components/package/label/src/CsLabel.vue"
-import CsButton from "../../components/package/button/src/CsButton.vue";
-import CsInput from "../../components/package/form/src/items/CsInput.vue";
-import CsFormItem from "../../components/package/form/src/CsFormItem.vue";
-import CsButtonGroup from "../../components/package/button/src/CsButtonGroup.vue";
+import CsForm from "../../../components/package/form/src/CsForm.vue";
+import CsTable from "../../../components/package/table/src/CsTable.vue"
+import CsLabel from "../../../components/package/label/src/CsLabel.vue"
+import CsButton from "../../../components/package/button/src/CsButton.vue";
+import CsInput from "../../../components/package/form/src/items/CsInput.vue";
+import CsFormItem from "../../../components/package/form/src/CsFormItem.vue";
+import CsButtonGroup from "../../../components/package/button/src/CsButtonGroup.vue";
 
 import {getCurrentInstance, h, reactive} from "vue";
-import CsStorage from "../../storage/cs-storage";
-import TABLE from "../../storage/table";
-import CryptoUtils from "../../components/lib/crypto-utils";
-import {resetObj} from "../../components/lib/utils";
+import CsStorage from "../../../storage/cs-storage";
+import TABLE from "../../../storage/table";
+import CryptoUtils from "../../../components/lib/crypto-utils";
+import {resetObj} from "../../../components/lib/utils";
 
 
 const data = reactive({

@@ -7,7 +7,7 @@
               `text-${align}`,
               {'list-active': isActive(item)}]"
           @click.stop="clickItem(item)">
-        {{ item[propObj.label] }}
+        {{ getObjValue(item, propObj.label) }}
       </div>
       <div
           :class="[
@@ -18,7 +18,7 @@
           v-for="(child, index) of item[propObj.children]"
           v-show="item[propObj.children] && item[propObj.children].length"
           @click.stop="clickItem(child)">
-        {{ child[propObj.label] }}
+        {{ getObjValue(child, propObj.label) }}
       </div>
     </div>
   </div>
@@ -26,7 +26,8 @@
 
 <script setup>
 
-import {reactive, defineProps, defineEmits, computed} from "vue";
+import {reactive, defineProps, defineEmits} from "vue";
+import {getObjValue} from "../../../lib/utils";
 
 const props = defineProps({
   align: {
@@ -68,7 +69,7 @@ const props = defineProps({
 
 const isActive = (item) => {
   const {value} = props.propObj
-  return data.currentItem[value] === item[value]
+  return getObjValue(data.currentItem, value) === getObjValue(item, value)
 }
 
 const data = reactive({
@@ -76,8 +77,6 @@ const data = reactive({
 })
 
 data.currentItem = props.options.length > 0 ? props.options[0] : {}
-
-console.info(data.currentItem[props.propObj.label])
 
 const emits = defineEmits(["click-item"])
 const clickItem = (item) => {

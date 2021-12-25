@@ -167,9 +167,9 @@ export function changeColor(leven = 0.3, flag, color) {
  * @param obj 原对象
  * @param path 属性路径
  * @param value 属性值
- * @returns {}
+ * @returns {any}
  */
-export function objSetValue(obj, path, value) {
+export function setObjValue(obj, path, value) {
     const temp = path.match(/\w+/g)
     if (!temp || ((value ?? '') === '')) return obj
     let pointer = obj
@@ -186,6 +186,17 @@ export function objSetValue(obj, path, value) {
         }
     }
     return obj
+}
+
+export function getObjValue(obj, path) {
+    const temp = path.match(/\w+/g)
+    if (!temp || path === '') return ''
+    let pointer = obj
+    const length = temp.length
+    for (let i = 0; i < length; i++) {
+        pointer = pointer[temp[i]]
+    }
+    return pointer
 }
 
 export function getCurrentDataTime(fmt = 'yyyy-MM-dd HH:mm:ss') {

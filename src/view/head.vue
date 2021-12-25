@@ -3,15 +3,16 @@
     <div class="home-header cs-deep-background-color cs-box-shadow">
       <div class="home-header-title">
         <img class="logo cs-pointer" src="../assets/logo.png" @click="handleLogoClick"/>
-        <span class="animate__animated animate__bounce animate__faster">本地存储</span>
+        <span class="animate__animated animate__bounce animate__faster">{{currentRoute.meta.tags.join('>')}}</span>
       </div>
       <div class="header-right">
         <div class="right-opt">
-          <span>{{data.userInfo.userName}}</span>
+          <span>{{ data.userInfo.userName }}</span>
           <span @click="handleLoginOut">退出</span>
         </div>
       </div>
     </div>
+    <system-menu/>
     <div class="home-content">
       <router-view/>
     </div>
@@ -19,29 +20,30 @@
 </template>
 
 <script setup>
-
+import SystemMenu from "./system/menu.vue"
 import {useRouter} from "vue-router";
 import CsStorage from "../storage/cs-storage";
-import {reactive} from "vue";
+import {computed, reactive} from "vue";
+import {mapActions, mapGetters, mapMutations, useStore} from "vuex";
+import {QUERY_ACCOUNT, QUERY_CURRENT_ROUTER, QUERY_ROUTER, SET_ACCOUNT} from "../store/mutation-types";
 
+const state = useStore()
 const router = useRouter()
 
 const data = reactive({
   userInfo: {}
 })
 
-const queryUserInfo = () => {
-  CsStorage.getInstance('USERINFO').queryPage({}).then(res => {
-    const temp = res.data.data || []
-    if (temp.length) {
-      data.userInfo = temp[0]
-    }
-  })
-}
+mapActions([`router/${QUERY_ROUTER}`])[`router/${QUERY_ROUTER}`].call({$store: state})
+const currentRoute = computed(mapGetters([`router/${QUERY_CURRENT_ROUTER}`])[`router/${QUERY_CURRENT_ROUTER}`]
+    .bind({$store: state})) || []
 
-queryUserInfo()
+data.userInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/${QUERY_ACCOUNT}`]
+    .bind({$store: state})) || []
+
 
 const handleLogoClick = () => {
+  mapMutations([`account/${SET_ACCOUNT}`])[`account/${SET_ACCOUNT}`].call({$store: state}, {})
   router.push('/').catch(e => console.error(e))
 }
 
@@ -103,7 +105,7 @@ const handleLoginOut = () => {
           width: auto;
           padding-left: 20px;
           display: inline-block;
-          white-space:nowrap;
+          white-space: nowrap;
           cursor: pointer;
 
           &:hover {

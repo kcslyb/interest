@@ -14,7 +14,8 @@
             </div>
           </div>
           <div class="footer">
-            <div class="custom-font" @click.stop="handleToLogin">登录\注册（本地存储系统）</div>
+            <div v-if="!accountInfo.id" class="custom-font" @click.stop="handleToLogin">登录\注册（本地存储系统）</div>
+            <div v-else class="custom-font" @click.stop="handleToHome">进入本地存储系统</div>
           </div>
         </div>
       </slot>
@@ -25,9 +26,11 @@
 <script setup>
 import CsDialog from "../components/package/dialog/src/CsDialog.vue"
 import {useRouter} from "vue-router"
-import {QUERY_BALL} from "../store/mutation-types";
-import {storeDispatch} from "../store/utils";
+import {computed, getCurrentInstance} from "vue";
+import {mapGetters, useStore} from "vuex";
+import {QUERY_ACCOUNT} from "../store/mutation-types";
 
+const state = useStore()
 const router = useRouter()
 
 const links = [
@@ -37,12 +40,16 @@ const links = [
 const handleToLogin = () => {
   router.push('/login').catch(e => console.error(e))
 }
+const handleToHome = () => {
+  router.push('/interest/home').catch(e => console.error(e))
+}
 
 const handleClick = (item) => {
   router.push(item.path).catch(e => console.error(e))
 }
 
-storeDispatch(`number/${QUERY_BALL}`)
+const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/${QUERY_ACCOUNT}`]
+    .bind({$store: state})) || []
 
 </script>
 
