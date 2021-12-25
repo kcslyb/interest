@@ -2,7 +2,7 @@
   <index>
     <template v-slot:content>
       <div class="content">
-        <div class="title custom-font">登录</div>
+        <div class="title custom-font">{{data.isLogin ? '登录' : '注册'}}</div>
         <div class="content">
           <cs-form ref="userForm" label-width="80px" v-model="data.userDto">
             <cs-form-item required label="用户名" prop="userName" :errorMsg="data.userNameMsg">
@@ -17,7 +17,6 @@
           <cs-button class="custom-font" @click.stop="handleLogin">{{data.isLogin ? '登录' : '注册'}}</cs-button>
         </div>
         <div class="register">
-          <span class="back btn cs-pointer" @click.stop="handleBack">返回</span>
           <span class="btn cs-pointer" @click.stop="handleSwitch">{{!data.isLogin ? '登录' : '注册'}}</span>
         </div>
       </div>
@@ -31,12 +30,12 @@ import CsButton from "../../../components/package/button";
 import CsForm from "../../../components/package/form/src/CsForm.vue";
 import CsInput from "../../../components/package/form/src/items/CsInput.vue";
 import CsFormItem from "../../../components/package/form/src/CsFormItem.vue";
-import {getCurrentInstance, reactive, ref} from "vue";
+import {computed, getCurrentInstance, reactive, ref} from "vue";
 import TABLE from "../../../storage/table";
 import CsStorage from "../../../storage/cs-storage";
 import {useRouter} from "vue-router";
 import CryptoUtils from "../../../components/lib/crypto-utils";
-import {mapActions, useStore} from "vuex";
+import {mapActions, mapGetters, useStore} from "vuex";
 import {QUERY_ACCOUNT, QUERY_ROUTER} from "../../../store/mutation-types";
 
 const state = useStore()
@@ -47,8 +46,8 @@ const data = reactive({
   passwordMsg: '',
   userNameMsg: '',
   userDto: {
-    userName: '',
-    password: ''
+    userName: 'kcs',
+    password: 'kcs'
   }
 })
 

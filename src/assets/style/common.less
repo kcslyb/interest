@@ -20,17 +20,19 @@
 @cs-d09-color: var(--d09-color, #5e6d82);
 
 @info-color: @cs-sd-color;
-@warning-color: #CD853F;
-@error-color: #FF0000;
-@primary-color: #1E90FF;
+@warning-color: #e6a23c;
+@error-color: #f56c6c;
+@danger-color: @error-color;
+@primary-color: #409eff;
+@success-color: #67c23a;
 
-@deep-border-color:@cs-d06-color;
+@deep-border-color: @cs-d06-color;
 @default-color: @cs-d06-color;
 @border-color: @cs-d02-color;
 @text-color: @cs-d02-color;
-@active-color:@cs-d09-color;
+@active-color: @cs-d09-color;
 @deep-active-color: @cs-d05-color;
-@simple-color:@cs-d08-color;
+@simple-color: @cs-d08-color;
 @background-color: @cs-s08-color;
 @deep-background-color: @cs-s04-color;
 @active-background-color: @cs-s04-color;
@@ -42,14 +44,58 @@
 }
 
 .cs-deep-background-color {
- background-color: @deep-background-color
+  background-color: @deep-background-color
 }
 
 .cs-box-shadow {
   box-shadow: 0 2px 4px 0 @background-color;
 }
+
 .cs-box-shadow-deep {
   box-shadow: 0 2px 4px 0 @deep-background-color;
+}
+
+.cs-content-box {
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+}
+
+.cs-no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.cs-container {
+  width: 80%;
+  height: calc(100% - 20px);
+  display: inline-block;
+
+  .cs-grid-content {
+    display: grid;
+    padding: 20px;
+    align-content: start;
+    height: calc(100% - 60px);
+    box-sizing: border-box;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px 20px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .cs-content {
+    padding: 20px;
+    height: calc(100% - 60px);
+    box-sizing: border-box;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .cs-pointer {
@@ -155,7 +201,7 @@
 }
 
 .cs-require {
-  &:before{
+  &:before {
     content: '*';
     color: @error-color;
     display: inline-block;
@@ -169,8 +215,8 @@
 }
 
 .cs-input-content {
-  background:none;
-  outline:none;
+  background: none;
+  outline: none;
   padding: 9px;
   width: 100%;
   line-height: 15px;

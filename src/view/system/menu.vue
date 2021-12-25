@@ -21,7 +21,7 @@
       </div>
     </div>
     <div class="menu-line-end" v-show="show"></div>
-    <div class="menu-switch" @click="show = !show">菜单</div>
+    <div class="menu-switch" @click="show = !show">{{show ? '收起' : '展开'}}</div>
   </div>
 </template>
 
@@ -34,7 +34,7 @@ import {useRouter} from "vue-router";
 const state = useStore()
 const router = useRouter()
 
-const show = ref(false)
+const show = ref(true)
 
 const routers = computed(mapGetters([`router/${QUERY_ROUTER}`])[`router/${QUERY_ROUTER}`].bind({$store: state}))
 
@@ -143,6 +143,7 @@ const handleRouterClick = (menu) => {
     color: @default-color;
     box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
     animation: menuFrames 5s infinite linear;
+    background-color: @deep-background-color;
 
     &:hover {
       animation: none;

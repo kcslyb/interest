@@ -1,5 +1,5 @@
 <template>
-  <div class="account">
+  <div class="cs-container">
     <div class="cs-padding-top20">
       <cs-label label="账号管理">
         <template v-slot:right>
@@ -7,11 +7,13 @@
         </template>
       </cs-label>
     </div>
-    <cs-table
-        :data="data.pageData"
-        :columns="data.pageColumns"
-        @on-select-change="handleSelectChange">
-    </cs-table>
+    <div class="cs-content cs-content-box">
+      <cs-table
+          :data="data.pageData"
+          :columns="data.pageColumns"
+          @on-select-change="handleSelectChange">
+      </cs-table>
+    </div>
   </div>
 </template>
 
