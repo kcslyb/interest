@@ -1,5 +1,6 @@
 <template>
   <div class="box-container">
+    <div class="bg-blur"></div>
     <div class="container">
       <slot name="content">
         <div class="content">
@@ -57,7 +58,18 @@ const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/$
 .box-container {
   width: 100%;
   height: 100%;
-  background-image: url("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp5.itc.cn%2Fq_70%2Fimages01%2F20210608%2F289a9f603c9e4b76ab3ee69f20dacea3.jpeg&refer=http%3A%2F%2Fp5.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1649652087&t=4335a239699ee065fc5ea888f7a488df");
+
+  .bg-blur {
+    width: 100%;
+    height: 100%;
+    background: url("https://w.wallhaven.cc/full/ne/wallhaven-nedq9k.jpg") no-repeat center;
+    background-size: cover;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(15px);
+  }
 
   .book {
     position: absolute;
@@ -69,17 +81,20 @@ const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/$
 
   .container {
     position: absolute;
-    left: 26%;
+    left: 33%;
     top: 46%;
     width: 520px;
     height: 260px;
     padding: 20px;
     border-radius: 8px;
-    background-color: rgba(255,255,255,0.09);
+    box-shadow: 0 2px 4px 0 #a6c4d7;
+    //background-color: rgb(84 137 171 / 60%);
     -webkit-transform: translateX(-50%) translateY(-50%);
     -moz-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
+    background: url("https://w.wallhaven.cc/full/ne/wallhaven-nedq9k.jpg") no-repeat center;
+    background-size: cover;
 
     .content {
       height: 100%;
