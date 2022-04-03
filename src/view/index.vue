@@ -4,7 +4,7 @@
     <div class="container">
       <slot name="content">
         <div class="content">
-          <div class="title custom-font">个人学习页签</div>
+          <div class="title custom-font">项目彩蛋</div>
           <div class="content">
             <div
                 class="link custom-font"
@@ -15,8 +15,8 @@
             </div>
           </div>
           <div class="footer">
-            <div v-if="!accountInfo.id" class="custom-font" @click.stop="handleToLogin">登录\注册（本地存储系统）</div>
-            <div v-else class="custom-font" @click.stop="handleToHome">进入本地存储系统</div>
+            <div v-if="!accountInfo.id" class="custom-font" @click.stop="handleToLogin">登录\注册（本地系统）</div>
+            <div v-else class="custom-font" @click.stop="handleToHome">进入本地系统</div>
           </div>
         </div>
       </slot>
@@ -35,8 +35,9 @@ const state = useStore()
 const router = useRouter()
 
 const links = [
-  {label: '从组件学习vue3',  path: '/components/IndexExample'},
-  {label: 'js常用工具方法总结', path: '/components/IndexExample'}
+  {label: '本项目组件文档(vue3 语法学习)',  path: '/components/IndexExample'},
+  {label: 'js工具方法总结记录', path: 'https://juejin.cn/post/6966109855086018591', href: true},
+  {label: '本项目源码地址', path: 'https://github.com/kcslyb/interest',  href: true}
 ]
 const handleToLogin = () => {
   router.push('/login').catch(e => console.error(e))
@@ -46,7 +47,11 @@ const handleToHome = () => {
 }
 
 const handleClick = (item) => {
-  router.push(item.path).catch(e => console.error(e))
+  if(item.href) {
+    window.open(item.path)
+  } else {
+    router.push(item.path).catch(e => console.error(e))
+  }
 }
 
 const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/${QUERY_ACCOUNT}`]
