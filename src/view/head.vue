@@ -19,9 +19,13 @@
         </div>
       </div>
     </div>
-    <system-menu/>
     <div class="home-content">
-      <router-view/>
+      <div class="home-content-aside">
+        <system-menu/>
+      </div>
+      <div class="home-content-right">
+        <router-view/>
+      </div>
     </div>
   </div>
 </template>
@@ -158,9 +162,30 @@ const handleLoginOut = () => {
     width: 100%;
     height: 100%;
     padding-top: 50px;
-    text-align: center;
+    display: inline-flex;
     box-sizing: border-box;
     overflow: hidden;
+
+    .home-content-aside {
+      width: 33%;
+      height: 100%;
+      overflow: auto;
+      min-width: 200px;
+      max-width: 300px;
+      display: inline-block;
+      box-sizing: border-box;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+    }
+
+    .home-content-right {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: inline-block;
+      box-sizing: border-box;
+      border-radius: 4px;
+    }
   }
 }
 

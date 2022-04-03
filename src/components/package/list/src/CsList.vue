@@ -95,9 +95,12 @@ const clickItem = (item) => {
 
     .list-title {
       font-size: 16px;
-      padding: 10px 5px;
+      padding: 10px;
       cursor: pointer;
       border-radius: 3px;
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid @border-color;
 
       &:hover {
         color: @default-active-color;
@@ -107,10 +110,13 @@ const clickItem = (item) => {
 
     .list-label {
       font-size: 14px;
-      padding: 10px 5px;
+      padding: 10px 10px 10px 20px;
       color: @default-color;
       cursor: pointer;
-      border-radius: 3px;
+      border-radius: 4px;
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid @border-color;
 
       &:hover {
         color: @default-active-color;

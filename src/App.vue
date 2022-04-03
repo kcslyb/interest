@@ -27,7 +27,11 @@ initColor()
 </script>
 
 <style lang="less">
-html, body {
+html {
+  background-color: @background-color;
+  height: 100%;
+}
+body {
   height: 100%;
   padding: 0;
   margin: 0;

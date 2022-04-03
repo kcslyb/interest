@@ -1,14 +1,8 @@
 <template>
   <div>
     <div style="text-align: center">
-      <h1> What have you done? </h1>
-      <div>
-        <a type="text" style="display: inline; cursor: pointer" @click="goBack">
-          <h4> Now Go Back Using Below LInk</h4>
-        </a>
-      </div>
       <span id="error-link">{{ account }}</span>
-      <h2>! ERROR DECETED !</h2>
+      <h2>! ERROR !</h2>
     </div>
   </div>
 </template>
