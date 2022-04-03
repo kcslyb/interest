@@ -100,7 +100,8 @@ const clickItem = (item) => {
       border-radius: 3px;
 
       &:hover {
-        color: @simple-color;
+        color: @default-active-color;
+        background-color: @active-background-color;
       }
     }
 
@@ -112,12 +113,13 @@ const clickItem = (item) => {
       border-radius: 3px;
 
       &:hover {
-        color: @simple-color;
+        color: @default-active-color;
+        background-color: @active-background-color;
       }
     }
 
     .list-active {
-      color: @active-color;
+      color: @default-active-color;
       background-color: @active-background-color;
     }
   }

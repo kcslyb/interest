@@ -1,94 +1,91 @@
 <template>
-  <div id="tableContainer" ref="container" class="text-container cs-scrollbar">
-    <div class="text-title cs-deep-background-color" :style="{width: `${proxy.rowWidth}px`}">
-      <span
-          v-show="_columns.length > 0"
-          :class="[
-              'text-title-item',
-               {
-                 'cs-border-right': (index < _columns.length - 1)
-               }
-          ]"
-          :style="`width: ${_columns[index].width}px`"
-          :key="`columns_title_${index}`"
-          v-for="(item, index) of _columns">
-        <span v-if="item.type === 'checkbox'" :class="[
-            'cell-text',
-             `text-center}`,
-             {
-               'disabled': rowDisabled,
-             }
-             ]">
-          <input
-              type="checkbox"
-              :id="titleCheckboxId"
-              class="table-checkbox"
-              :name="index"
-              :value="index"
-              @change="handleSelectAll"/>
-        </span>
-        <span v-else :class="[
-            'cell-text',
-             `text-${textAlign}`,
-             {
-               'cell-text-overflow': isOverHidden
-             }
-             ]">
-          {{ item.label }}
-        </span>
-      </span>
-    </div>
-    <div
-        class="text-title"
-        :key="`row_${rowIndex}`"
-        :style="{width: `${proxy.rowWidth}px`}"
-        v-for="(row, rowIndex) of data">
-      <span
-          :class="[
+  <div id="tableContainer" ref="container" class="cs-table-container cs-scrollbar">
+    <table class="cs-table">
+      <tr class="text-title cs-deep-background-color">
+        <th :class="{
+              'text-title-item': true,
+              'width50': isCheckboxOrSerial(item)
+            }"
+            :align="textAlign"
+            :key="`columns_title_${index}`"
+            v-for="(item, index) of _columns">
+            <span v-if="item.type === 'checkbox'"
+                  :class="[
+                'cell-text',
+                 {
+                   'disabled': rowDisabled,
+                 }
+                 ]">
+              <input
+                  type="checkbox"
+                  :id="titleCheckboxId"
+                  class="table-checkbox"
+                  :name="index"
+                  :value="index"
+                  @change="handleSelectAll"/>
+            </span>
+          <span v-else
+                :class="[
+                    'cell-text',
+                     `text-${textAlign}`,
+                     {
+                       'cell-text-overflow': isOverHidden
+                     }
+                     ]">
+                {{ item.label }}
+            </span>
+        </th>
+      </tr>
+      <tr
+          class="text-title text-cell-item"
+          :key="`row_${rowIndex}`"
+          v-for="(row, rowIndex) of data">
+        <td
+            :class="[
               'text-cell-item',
+              {'width50': isCheckboxOrSerial(item)}
+            ]"
+            :align="textAlign"
+            :key="`row_columns_title_${index}`"
+            v-for="(item, index) of _columns">
+            <span v-if="item.type === 'serial'" :class="[
+              'cell-text',
+               `text-center`,
                {
-                 'cs-border-right': (index < _columns.length - 1)
+                 'cell-text-overflow': isOverHidden
                }
-          ]"
-          :style="`width: ${item.width}px`"
-          :key="`row_columns_title_${index}`"
-          v-for="(item, index) of _columns">
-        <span v-if="item.type === 'serial'" :class="[
-            'cell-text',
-             `text-center`,
-             {
-               'cell-text-overflow': isOverHidden
-             }
-             ]">
-          {{ item.format ? item.format(rowIndex + 1) : rowIndex + 1 }}
-        </span>
-        <span v-else-if="item.type === 'checkbox'" :class="[
-            'cell-text',
-             `text-center}`,
-             {
-               'disabled': colDisabled(row)
-             }
-             ]">
-          <input
-              type="checkbox"
-              :name="checkboxName"
-              class="table-checkbox"
-              :value="rowIndex"
-              :checked="props.data[rowIndex].tempCheckedFlag"
-              @change="handleSelect($event, row, rowIndex)"/>
-        </span>
-        <span v-else :class="[
-            'cell-text',
-             `text-${item.align || 'center'}`,
-             {
-               'cell-btn': item.event,
-               'cell-text-overflow': isOverHidden
-             }]"
-              @click="handleCellClick(row, item)">
-          {{ item.format ? item.format(row[item.prop] || '') : (row[item.prop] || '------') }}
-        </span>
-      </span>
-    </div>
+               ]">
+              {{ item.format ? item.format(rowIndex + 1) : rowIndex + 1 }}
+            </span>
+          <span v-else-if="item.type === 'checkbox'"
+                :class="[
+                    'cell-text',
+                    `text-center}`,
+                     {
+                       'disabled': colDisabled(row)
+                     }
+                     ]">
+                  <input
+                      type="checkbox"
+                      :name="checkboxName"
+                      class="table-checkbox"
+                      :value="rowIndex"
+                      :checked="props.data[rowIndex].tempCheckedFlag"
+                      @change="handleSelect($event, row, rowIndex)"/>
+            </span>
+          <span v-else :class="[
+              'cell-text',
+               `text-${item.align || 'center'}`,
+               {
+                 'cell-btn': item.event,
+                 'cell-text-overflow': isOverHidden
+               }]"
+                @click="handleCellClick(row, item)">
+              {{ item.format ? item.format(row[item.prop] || '') : (row[item.prop] || '------') }}
+            </span>
+        </td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -103,7 +100,7 @@ let _columns = reactive(props.columns)
 const checkboxName = generateRandom()
 const titleCheckboxId = generateRandom()
 
-const { proxy } = getCurrentInstance()
+const {proxy} = getCurrentInstance()
 
 const container = ref(null)
 
@@ -143,7 +140,7 @@ const handleSelectAll = (e) => {
   checkbox.forEach(value => value.checked = e.target.checked)
   console.info('handleSelectAll', e.target.checked)
   props.data.map(value => {
-    value.tempCheckedFlag =  e.target.checked
+    value.tempCheckedFlag = e.target.checked
     return value
   })
   handleSelectChange()
@@ -201,6 +198,10 @@ const colDisabled = (row) => {
     }
   }
   return false
+}
+
+const isCheckboxOrSerial = (item) => {
+  return ['serial', 'checkbox'].includes(item.type)
 }
 
 const props = defineProps({
@@ -265,52 +266,64 @@ const props = defineProps({
 </script>
 
 <style scoped lang="less">
-.text-container {
-  width: auto;
+.cs-table-container {
+  width: 100%;
   overflow: auto;
-  .text-title {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    border: 1px solid @border-color;
-    box-sizing: border-box;
 
-    .text-title-item {
-      flex-grow: 1;
-      font-size: 16px;
-      font-weight: bold;
-      padding: 10px 5px;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
+  .cs-table {
+    width: 100%;
+    border-spacing: 0;
+
+    & td, th {
+      min-width: 100px;
+      border: 1px solid @border-color;
     }
-    .text-cell-item {
-      flex-grow: 1;
-      font-size: 14px;
-      padding: 10px 5px;
-      font-weight: bold;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-    }
-    .cell-text {
+
+    .text-title {
       width: 100%;
-    }
-    .cell-btn {
-      cursor: pointer;
-    }
-    .cell-text-overflow {
-      word-break: break-all;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
+      box-sizing: border-box;
+
+      .text-title-item {
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 5px;
+        box-sizing: border-box;
+      }
+
+      .text-cell-item {
+        font-size: 14px;
+        padding: 10px 5px;
+        font-weight: bold;
+        box-sizing: border-box;
+        align-items: center;
+      }
+
+      .cell-text {
+        width: 100%;
+      }
+
+      .cell-btn {
+        cursor: pointer;
+      }
+
+      .cell-text-overflow {
+        word-break: break-all;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
     }
   }
 }
+
 .table-checkbox {
   width: 14px;
   height: 14px;
+}
+
+.width50 {
+  min-width: 50px !important;
 }
 </style>

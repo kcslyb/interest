@@ -1,19 +1,20 @@
 <template>
   <div>
-    <div class="text-left margin-bottom">
-      <cs-quill></cs-quill>
-    </div>
-    <div class="text-left margin-bottom">
-      <cs-label label="示例">
-        <template v-slot:right>
-          <cs-button-group :btn-list="btnList" @on-click="handleClick"></cs-button-group>
-        </template>
-      </cs-label>
-    </div>
-    <eg-container>
-      <cs-table :is-over-hidden="false" :columns="columns" :data="data.tableData"></cs-table>
-    </eg-container>
+<!--    <div class="text-left margin-bottom">-->
+<!--      <cs-quill></cs-quill>-->
+<!--    </div>-->
+<!--    <div class="text-left margin-bottom">-->
+<!--      <cs-label label="示例">-->
+<!--        <template v-slot:right>-->
+<!--          <cs-button-group :btn-list="btnList" @on-click="handleClick"></cs-button-group>-->
+<!--        </template>-->
+<!--      </cs-label>-->
+<!--    </div>-->
+<!--    <eg-container>-->
+<!--      <cs-table :is-over-hidden="false" :columns="columns" :data="data.tableData"></cs-table>-->
+<!--    </eg-container>-->
     <eg-container :content="getContent">
+      <cs-label showUnderLine label="插件方法"></cs-label>
       <cs-button class="margin-right" @on-click="handleClickLoading">loading</cs-button>
       <cs-button class="margin-right" @on-click="handleClickDialog">dialog</cs-button>
       <cs-button @on-click="handleClickNotify">notify</cs-button>

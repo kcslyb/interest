@@ -1,6 +1,6 @@
 <template>
-  <div class="box-container cs-background-color">
-    <div class="container cs-deep-background-color">
+  <div class="box-container">
+    <div class="container">
       <slot name="content">
         <div class="content">
           <div class="title custom-font">个人学习页签</div>
@@ -57,6 +57,7 @@ const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/$
 .box-container {
   width: 100%;
   height: 100%;
+  background-image: url("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fp5.itc.cn%2Fq_70%2Fimages01%2F20210608%2F289a9f603c9e4b76ab3ee69f20dacea3.jpeg&refer=http%3A%2F%2Fp5.itc.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1649652087&t=4335a239699ee065fc5ea888f7a488df");
 
   .book {
     position: absolute;
@@ -68,12 +69,13 @@ const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/$
 
   .container {
     position: absolute;
-    left: 50%;
-    top: 35%;
+    left: 26%;
+    top: 46%;
     width: 520px;
     height: 260px;
     padding: 20px;
     border-radius: 8px;
+    background-color: rgba(255,255,255,0.09);
     -webkit-transform: translateX(-50%) translateY(-50%);
     -moz-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);

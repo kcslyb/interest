@@ -1,9 +1,6 @@
 <template>
   <div
-      :class="[
-          'cs-label',
-           {'cs-label-bottom': showUnderLine}
-           ]">
+      :class="{'cs-label': true, 'cs-label-bottom': showUnderLine}">
     <div :class="{'cs-label-container': slots.right}">
       <div :class="[`text-${textAlign}`]">
         <div class="label-icon-container">
@@ -43,7 +40,7 @@ const slots = useSlots()
 <style scoped lang="less">
 .cs-label {
   height: auto;
-  padding: 0 5px;
+  padding: 5px 0;
   font-weight: bold;
   margin-bottom: 20px;
 }

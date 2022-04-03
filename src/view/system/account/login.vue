@@ -199,7 +199,7 @@ const handleBack = () => {
       &:hover {
         font-size: 14px;
         font-weight: bold;
-        color: @active-color;
+        color: @default-active-color;
       }
     }
 

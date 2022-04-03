@@ -50,10 +50,10 @@ export default {
                         const body = document.body
                         body.appendChild(div)
                         render(vm, div)
+                        vm.el.style.opacity = 0
+                        const { timeout } = temp
+                        animationOpacityShow(div, timeout)
                         setTimeout(() => {
-                            vm.el.style.opacity = 0
-                            const { timeout } = temp
-                            animationOpacityShow(div, timeout)
                             const proxy = vm.component.proxy
                             resolve(proxy)
                         }, 0)

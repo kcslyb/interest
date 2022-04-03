@@ -25,8 +25,8 @@ const props = defineProps({
           type: 'info',
           label: 'info'
         }, {
-          type: 'text',
-          label: 'text'
+          type: 'success',
+          label: 'success'
         }
       ]
     }

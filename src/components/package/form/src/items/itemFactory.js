@@ -3,6 +3,7 @@ import CsInput from "./CsInput.vue";
 import CsRadio from "./CsRadio.vue";
 import CsTextarea from "./CsTextarea.vue";
 import CsCheckbox from "./CsCheckbox.vue";
+import CsSelect from "./CsSelect.vue";
 import {hasNotProperty, hasProperty} from "../../../../lib/utils";
 export default function itemFactory(modelValue, props) {
     const type = props.type || ''
@@ -39,6 +40,13 @@ const process = {
             ...props,
             modelValue: modelValue,
             'onUpdate': (val) =>Object.assign(modelValue, val)
+        })
+    },
+    select: (modelValue, props) => {
+        return h(CsSelect, {
+            ...props,
+            modelValue: modelValue,
+            'onUpdate': (val) => modelValue[props.prop] = val
         })
     }
 }

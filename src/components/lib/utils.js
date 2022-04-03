@@ -129,7 +129,7 @@ export function numToHex(cNum) {
     return temp.length === 1 ? `0${temp}` : temp
 }
 
-export function getRandomColor(maxNum = 220, minNum = 180) {
+export function getRandomColor(maxNum = 100, minNum = 120) {
     const temp = ['#']
     for (let i = 0; i < 3; i++) {
         const cNum = randomNum(maxNum, minNum)
@@ -248,4 +248,21 @@ export function resetObj(obj) {
         obj[keys[i]] = ''
     }
     return obj
+}
+
+/**
+ * 函数柯里化
+ * @param fun
+ * @returns {(function(...[*]): (*))|*}
+ */
+export function curring(fun) {
+    return function curr(...args) {
+        if (args.length >= fun.length) {
+            return fun.apply(this, ...args)
+        } else  {
+            return function (...args2) {
+                return curr.apply(this, args.concat(args2))
+            }
+        }
+    }
 }

@@ -1,8 +1,8 @@
 <script>
-import {computed, h, provide, reactive} from 'vue'
+import {h, provide, reactive} from 'vue'
 import CsFormItem from "./CsFormItem.vue";
 import itemFactory from "./items/itemFactory";
-import {isEmpty} from "../../../lib/utils";
+import {hasProperty, isEmpty} from "../../../lib/utils";
 
 export default {
   setup(props, {slots, attrs, expose}) {
@@ -22,6 +22,9 @@ export default {
       return items.map(item => {
         return h(CsFormItem, {
           ...item,
+          class: {
+            'cursor-not-allowed': hasProperty(item, 'disabled') ? item.disabled : attrs.disabled
+          },
           validate: reactData.validate,
           modelValue: modelValue
         }, {

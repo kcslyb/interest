@@ -135,7 +135,7 @@ const clickNode = (item) => {
 
   &:hover {
     border-radius: 2px;
-    color: @active-color;
+    color: @default-active-color;
     background-color: @active-background-color;
   }
 }
@@ -146,7 +146,7 @@ const clickNode = (item) => {
 }
 
 .tree-content-label {
-  padding: 2px;
+  padding: 5px 0;
   font-size: 14px;
   width: 100%;
 }
@@ -156,7 +156,6 @@ const clickNode = (item) => {
 }
 
 .tree-option-item {
-  padding: 2px;
   font-size: 14px;
 }
 
@@ -182,7 +181,7 @@ const clickNode = (item) => {
 
 .node-active {
   border-radius: 2px;
-  color: @active-color;
+  color: @default-active-color;
   background-color: @active-background-color;
 }
 

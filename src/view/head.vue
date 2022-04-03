@@ -3,7 +3,14 @@
     <div class="home-header cs-deep-background-color cs-box-shadow">
       <div class="home-header-title">
         <img class="logo cs-pointer" src="../assets/logo.png" @click="handleLogoClick"/>
-        <span class="animate__animated animate__bounce animate__faster">{{currentRoute.meta.tags.join('>')}}</span>
+        <div class="menu-tab">
+          <span
+              class="menu-tab-item"
+              v-for="(item, index) in currentRoute.meta.tags"
+              :key="`menu_${index}`">
+            {{ item }}
+          </span>
+        </div>
       </div>
       <div class="header-right">
         <div class="right-opt">
@@ -84,13 +91,30 @@ const handleLoginOut = () => {
         height: 50px;
       }
 
-      & span {
-        display: inline-block;
-        font-weight: bold;
-        font-size: 16px;
-        line-height: 50px;
-        color: @default-color;
+      .menu-tab {
+        :last-child {
+          &::after {
+            content: none !important;
+          }
+        }
+
+        .menu-tab-item {
+          display: inline-block;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 50px;
+          color: @default-color;
+          padding-left: 10px;
+
+          &::after {
+            content: ' ';
+            margin-left: 10px;
+            padding-right: 3px;
+            background-color: @cs-d03-color;
+          }
+        }
       }
+
     }
 
     .header-right {
@@ -101,6 +125,12 @@ const handleLoginOut = () => {
         display: flex;
         align-items: center;
 
+        :first-child {
+          &::before {
+            content: none !important;
+          }
+        }
+
         & span {
           width: auto;
           padding-left: 20px;
@@ -108,8 +138,16 @@ const handleLoginOut = () => {
           white-space: nowrap;
           cursor: pointer;
 
+          &::before {
+            content: ' ';
+            margin-right: 20px;
+            padding-right: 3px;
+            background-color: @cs-d03-color;
+          }
+
           &:hover {
-            color: @active-color;
+            font-weight: bold;
+            color: @default-active-color;
           }
         }
       }

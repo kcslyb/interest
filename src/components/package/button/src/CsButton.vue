@@ -64,12 +64,12 @@ const handleClick = (e) => {
 }
 
 .button-info {
-  color: @default-color;
-  border: 1px solid @default-color;
+  color: @info-color;
+  border: 1px solid @info-color;
 
   &:hover {
     color: white;
-    background: @default-color;
+    background: @info-color;
   }
 }
 
@@ -93,13 +93,13 @@ const handleClick = (e) => {
   }
 }
 
-.button-text {
-  color: @text-color;
-  border: 1px solid @text-color;
+.button-success {
+  color: @success-color;
+  border: 1px solid @success-color;
 
   &:hover {
     color: white;
-    background: @text-color;
+    background: @success-color;
   }
 }
 </style>

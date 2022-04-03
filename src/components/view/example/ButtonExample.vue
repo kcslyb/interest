@@ -43,13 +43,13 @@
       <cs-label class="margin-bottom" label="基础用法"></cs-label>
       <div class="text-left margin-bottom">
         <cs-button span>基本</cs-button>
-        <cs-button span type="text">文本</cs-button>
+        <cs-button span type="success">文本</cs-button>
         <cs-button span type="primary">主要</cs-button>
         <cs-button type="warning">警告</cs-button>
       </div>
       <cs-label class="margin-bottom" label="禁用"></cs-label>
       <div class="text-left margin-bottom">
-        <cs-button disabled type="text">文本</cs-button>
+        <cs-button disabled type="success">文本</cs-button>
       </div>
       <cs-label class="margin-bottom" label="按钮组"></cs-label>
       <div class="text-left">
@@ -70,8 +70,8 @@ const btnList = reactive([
     type: 'info',
     label: 'info'
   }, {
-    type: 'text',
-    label: 'text'
+    type: 'success',
+    label: 'success'
   }
 ])
 
