@@ -2,7 +2,7 @@
   <index>
     <template v-slot:content>
       <div class="content">
-        <div class="title custom-font">{{data.isLogin ? '登录' : '注册'}}</div>
+        <div class="title custom-font">{{ data.isLogin ? '登录' : '注册' }}</div>
         <div class="content">
           <cs-form ref="userForm" label-width="80px" v-model="data.userDto">
             <cs-form-item required label="用户名" prop="userName" :errorMsg="data.userNameMsg">
@@ -14,10 +14,11 @@
           </cs-form>
         </div>
         <div class="footer">
-          <cs-button class="custom-font" @click.stop="handleLogin">{{data.isLogin ? '登录' : '注册'}}</cs-button>
+          <cs-button type="white" class="custom-font" @click.stop="handleLogin">{{ data.isLogin ? '登录' : '注册' }}
+          </cs-button>
         </div>
         <div class="register">
-          <span class="btn cs-pointer" @click.stop="handleSwitch">{{!data.isLogin ? '登录' : '注册'}}</span>
+          <span class="btn cs-pointer" @click.stop="handleSwitch">{{ !data.isLogin ? '登录' : '注册' }}</span>
         </div>
       </div>
     </template>
@@ -127,8 +128,10 @@ const handleLogin = () => {
       })
     } else {
       csStorageServe.queryPage(
-          {...data.userDto,
-          password: changePassword(data.userDto.password)}).then((res) => {
+          {
+            ...data.userDto,
+            password: changePassword(data.userDto.password)
+          }).then((res) => {
         const flag = res.code === 200 && Array.isArray(res.data) && res.data.length === 0
         data.passwordMsg = flag ? '密码错误' : ''
         value.submit()
@@ -139,7 +142,7 @@ const handleLogin = () => {
                 .then(() => {
                   getStateServer('LogStateServe').commitSimpleLog(`${data.userDto.userName}登录成功`)
                   router.push('/interest/home').catch(e => console.error(e))
-            })
+                })
           })
         }
       })
@@ -162,7 +165,7 @@ const handleBack = () => {
   justify-content: center;
 
   .title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
@@ -183,10 +186,25 @@ const handleBack = () => {
         font-weight: bold;
       }
     }
+
+    ::v-deep .form-item-label {
+      color: @white-color;
+    }
+
+    ::v-deep .form-item-content {
+
+      .cs-input-content {
+        color: @white-color;
+      }
+
+      .error {
+        color: @white-color;
+      }
+    }
   }
 
   .footer {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
     cursor: pointer;
@@ -194,15 +212,16 @@ const handleBack = () => {
 
   .register {
     width: 100%;
-    font-size: 14px;
+    font-size: 16px;
     text-align: right;
-    line-height: 14px;
+    line-height: 16px;
+    padding-bottom: 10px;
 
     .btn {
       &:hover {
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
-        color: @default-active-color;
+        color: @border-color;
       }
     }
 

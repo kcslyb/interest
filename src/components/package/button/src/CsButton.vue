@@ -102,4 +102,13 @@ const handleClick = (e) => {
     background: @success-color;
   }
 }
+
+.button-white {
+  color: @background-color;
+  border: 1px solid @background-color;
+
+  &:hover {
+    color: @border-color;
+  }
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="box-container">
     <div class="bg-blur"></div>
-    <div class="container">
+    <div :class="['container', hasMobile ? 'm-container' : 'p-container']">
       <slot name="content">
         <div class="content">
           <div class="title custom-font">项目彩蛋</div>
@@ -30,6 +30,7 @@ import {useRouter} from "vue-router"
 import {computed, getCurrentInstance} from "vue";
 import {mapGetters, useStore} from "vuex";
 import {QUERY_ACCOUNT} from "../store/mutation-types";
+import {isMobile} from "../components/lib/utils";
 
 const state = useStore()
 const router = useRouter()
@@ -53,6 +54,10 @@ const handleClick = (item) => {
     router.push(item.path).catch(e => console.error(e))
   }
 }
+
+const hasMobile = computed(() => {
+  return isMobile()
+})
 
 const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/${QUERY_ACCOUNT}`]
     .bind({$store: state})) || []
@@ -84,14 +89,24 @@ const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/$
     cursor: pointer;
   }
 
-  .container {
-    position: absolute;
+  .m-container {
+    left: 50%;
+    top: 46%;
+    width: 100%;
+  }
+
+  .p-container {
     left: 33%;
     top: 46%;
     width: 520px;
-    height: 260px;
     padding: 20px;
+  }
+
+  .container {
+    position: absolute;
+    height: 260px;
     border-radius: 8px;
+    color: @white-color;
     box-shadow: 0 2px 4px 0 #a6c4d7;
     //background-color: rgb(84 137 171 / 60%);
     -webkit-transform: translateX(-50%) translateY(-50%);

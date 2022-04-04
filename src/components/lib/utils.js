@@ -266,3 +266,12 @@ export function curring(fun) {
         }
     }
 }
+
+/**
+ * 判断是pc还是手机
+ * @returns {boolean}
+ */
+export function isMobile() {
+    const temp = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+    return (temp && temp.length > 0)
+}
