@@ -20,8 +20,9 @@
       </div>
     </div>
     <div class="home-content">
-      <div class="home-content-aside">
-        <system-menu/>
+      <div :class="['home-content-aside', `${data.collapse ? 'aside-collapse' : 'aside-noCollapse'}`]">
+        <div class="collapse" @click="handleCollapseClick">{{ `${data.collapse ? '>' : '<'}` }}</div>
+        <system-menu v-show="!data.collapse"/>
       </div>
       <div class="home-content-right">
         <router-view/>
@@ -36,13 +37,15 @@ import {useRouter} from "vue-router";
 import CsStorage from "../storage/cs-storage";
 import {computed, reactive} from "vue";
 import {mapActions, mapGetters, mapMutations, useStore} from "vuex";
-import {QUERY_ACCOUNT, QUERY_CURRENT_ROUTER, QUERY_ROUTER, SET_ACCOUNT} from "../store/mutation-types";
+import {QUERY_ACCOUNT, QUERY_CURRENT_ROUTER, QUERY_ROUTER, SET_ACCOUNT} from "../store/mutation-types"
+import getStateServer from "../state/state-serve";
 
 const state = useStore()
 const router = useRouter()
 
 const data = reactive({
-  userInfo: {}
+  userInfo: {},
+  collapse: false
 })
 
 mapActions([`router/${QUERY_ROUTER}`])[`router/${QUERY_ROUTER}`].call({$store: state})
@@ -54,14 +57,21 @@ data.userInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/${QUE
 
 
 const handleLogoClick = () => {
+  getStateServer('LogStateServe').commitSimpleLog('点击LOGO进入彩蛋')
   mapMutations([`account/${SET_ACCOUNT}`])[`account/${SET_ACCOUNT}`].call({$store: state}, {})
   router.push('/').catch(e => console.error(e))
 }
 
 const handleLoginOut = () => {
   CsStorage.getInstance('USERINFO').deleteAll().then(() => {
-    handleLogoClick()
+    getStateServer('LogStateServe').commitSimpleLog('退出操作')
+    mapMutations([`account/${SET_ACCOUNT}`])[`account/${SET_ACCOUNT}`].call({$store: state}, {})
+    router.push('/').catch(e => console.error(e))
   })
+}
+
+const handleCollapseClick = () => {
+  data.collapse = !data.collapse
 }
 
 </script>
@@ -166,16 +176,43 @@ const handleLoginOut = () => {
     box-sizing: border-box;
     overflow: hidden;
 
-    .home-content-aside {
+    .aside-noCollapse {
       width: 33%;
-      height: 100%;
-      overflow: auto;
       min-width: 200px;
       max-width: 300px;
+    }
+
+    .aside-collapse {
+      width: 14px;
+      overflow: hidden;
+    }
+
+    .home-content-aside {
+      height: 100%;
+      overflow: auto;
       display: inline-block;
       box-sizing: border-box;
       border-radius: 4px;
       box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+      position: relative;
+
+      .collapse {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        padding: 5px 4px;
+        font-size: 18px;
+        line-height: 28px;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 4px;
+        overflow: hidden;
+        background-color: @deep-background-color;
+
+        &:hover {
+          width: auto;
+        }
+      }
     }
 
     .home-content-right {
@@ -186,6 +223,15 @@ const handleLoginOut = () => {
       box-sizing: border-box;
       border-radius: 4px;
     }
+  }
+}
+
+@keyframes changeCollapseWidth {
+  from {
+    width: 5px;
+  }
+  to {
+    width: 30px;
   }
 }
 

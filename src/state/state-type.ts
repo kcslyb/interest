@@ -7,12 +7,16 @@ export type BaseSateType = {
 }
 
 export type QuerySateType = {
-    keyWord: string,
-    pageSize: string,
-    pageNum: string
+    keyWord?: string,
+    pageSize?: string,
+    pageNum?: string
 }
 
-export type ResponseStateType = {
-    code: number,
-    data: any
+export type LogStateType = {
+    id?: string,
+    accessTime?: string,
+    accessUserid: string,
+    accessUserName: string,
+    accessPath: string,
+    accessPathLabel: string
 }

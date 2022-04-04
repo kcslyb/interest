@@ -1,8 +1,8 @@
-import CsDialog from './src/CsDialog'
+import CsDialog from './src/CsDialog.vue'
 
 /* istanbul ignore next */
 CsDialog.install = function(Vue) {
-    Vue.component('CsDialog', CsDialog)
+    Vue.component('cs-dialog', CsDialog)
 }
 
 export default CsDialog

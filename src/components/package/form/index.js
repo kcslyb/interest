@@ -7,12 +7,12 @@ import CsTextarea from './src/items/CsTextarea.vue'
 
 /* istanbul ignore next */
 CsForm.install = function(Vue) {
-    Vue.component('CsForm', CsForm)
-    Vue.component('CsInput', CsInput)
-    Vue.component('CsRadio', CsRadio)
-    Vue.component('CsFormItem', CsFormItem)
-    Vue.component('CsCheckbox', CsCheckbox)
-    Vue.component('CsTextarea', CsTextarea)
+    Vue.component('cs-form', CsForm)
+    Vue.component('cs-input', CsInput)
+    Vue.component('cs-radio', CsRadio)
+    Vue.component('cs-form-item', CsFormItem)
+    Vue.component('cs-checkbox', CsCheckbox)
+    Vue.component('cs-textarea', CsTextarea)
 }
 
 export default CsForm

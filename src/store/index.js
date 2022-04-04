@@ -3,10 +3,12 @@ import {createStore} from 'vuex'
 const modules = {}
 
 const requireContext = import.meta.globEager('./module/*.js')
-Object.keys(requireContext).forEach(path => {
-    if ( requireContext[path].default) {
-        const key = path.match(/(\w+)\.js/)[1]
-        modules[key] = requireContext[path].default
+const requireContextTs = import.meta.globEager('./module/*.ts')
+const context = {...requireContext, ...requireContextTs}
+Object.keys(context).forEach(path => {
+    if ( context[path].default) {
+        const key = path.match(/(\w+)\.[js|ts]/)[1]
+        modules[key] = context[path].default
     }
 })
 

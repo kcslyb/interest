@@ -23,7 +23,7 @@ class StateStorage {
         return this.stateKey
     }
 
-    inset<T extends BaseSateType>(dto: T): Promise<string> {
+    inset<T extends BaseSateType>(dto: T): Promise<T> {
         // @ts-ignore
         return new Promise(resolve => {
             dto.id = generateRandom()
@@ -38,12 +38,12 @@ class StateStorage {
             states.unshift(dto)
             this.setState(this.getStateKey(), states)
             setTimeout(() => {
-                resolve(dto.id)
+                resolve(dto)
             }, 1000)
         })
     }
 
-    update<T extends BaseSateType>(dto: T): Promise<string> {
+    update<T extends BaseSateType>(dto: T): Promise<T> {
         // @ts-ignore
         return new Promise(resolve => {
             const {id} = dto
@@ -52,7 +52,7 @@ class StateStorage {
             states[index] = dto
             this.setState(this.getStateKey(), states)
             setTimeout(() => {
-                resolve(id)
+                resolve(dto)
             }, 1000)
         })
     }

@@ -2,7 +2,7 @@ import CsNotify from './src/CsNotify.vue'
 
 /* istanbul ignore next */
 CsNotify.install = function(Vue) {
-    Vue.component('CsNotify', CsNotify)
+    Vue.component('cs-notify', CsNotify)
 }
 
 export default CsNotify

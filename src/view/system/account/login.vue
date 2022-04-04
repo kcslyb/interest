@@ -37,6 +37,7 @@ import {useRouter} from "vue-router";
 import CryptoUtils from "../../../components/lib/crypto-utils";
 import {mapActions, mapGetters, useStore} from "vuex";
 import {QUERY_ACCOUNT, QUERY_ROUTER} from "../../../store/mutation-types";
+import getStateServer from "../../../state/state-serve";
 
 const state = useStore()
 const userForm = ref(null)
@@ -120,6 +121,7 @@ const handleLogin = () => {
     if (!data.isLogin) {
       csStorageServe.save({...data.userDto, password: changePassword(data.userDto.password)}).then((res) => {
         if (res.code === 200) {
+          getStateServer('LogStateServe').commitSimpleLog(`${data.userDto.userName}注册成功`)
           proxy.$csNotify({msg: '注册成功'})
         }
       })
@@ -135,6 +137,7 @@ const handleLogin = () => {
           CsStorage.getInstance('USERINFO').save(user).then(() => {
             mapActions([`account/${QUERY_ACCOUNT}`])[`account/${QUERY_ACCOUNT}`].call({$store: state})
                 .then(() => {
+                  getStateServer('LogStateServe').commitSimpleLog(`${data.userDto.userName}登录成功`)
                   router.push('/interest/home').catch(e => console.error(e))
             })
           })
