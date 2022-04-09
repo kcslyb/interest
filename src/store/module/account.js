@@ -13,16 +13,15 @@ const account = {
     },
     actions: {
         [QUERY_ACCOUNT]({commit}) {
-            return new Promise((resolve, reject) => {
-                BaseApi.queryAccountInfo().then(res => {
-                    const temp = res.data.data || []
-                    if (temp.length) {
-                        commit(SET_ACCOUNT, temp[0])
-                        resolve(temp[0])
-                    } else {
-                        reject()
-                    }
-                }).catch(e => reject(e))
+            return new Promise(async (resolve, reject) => {
+                const res = await BaseApi.queryAccountInfo()
+                const temp = res.data.data || []
+                if (temp.length) {
+                    commit(SET_ACCOUNT, temp[0])
+                    resolve(temp[0])
+                } else {
+                    reject()
+                }
             })
         }
     },

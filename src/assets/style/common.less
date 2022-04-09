@@ -183,14 +183,18 @@
 
 // common css
 
+.button + .button {
+  margin-left: 10px;
+}
+
 .cs-hover {
   &:hover {
-    color: @default-active-color;
+    color: @active-background-color;
   }
 }
 
 .cs-text-active {
-  color: @default-active-color;
+  color: @active-background-color;
 }
 
 .cs-form-item {

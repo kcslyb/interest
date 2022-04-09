@@ -83,6 +83,16 @@ const handleClick = (e) => {
   }
 }
 
+.button-error {
+  color: @error-color;
+  border: 1px solid @error-color;
+
+  &:hover {
+    color: white;
+    background: @error-color;
+  }
+}
+
 .button-primary {
   color: @primary-color;
   border: 1px solid @primary-color;

@@ -83,7 +83,7 @@ const router = createRouter({
 })
 
 let loading = null
-const whiteList = ['/login', '/test']
+const whiteList = ['/login', '/test', '/']
 router.beforeEach((to, from, next) => {
     loading = createLoading({})
     if (to.matched.length !== 0) {

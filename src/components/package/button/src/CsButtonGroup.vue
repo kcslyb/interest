@@ -1,7 +1,6 @@
 <template>
   <div>
     <cs-button
-        :span="span(index)"
         :type="item.type || 'info'"
         :disabled="item.disabled"
         :key="`btn_group_${index}`"
@@ -25,8 +24,17 @@ const props = defineProps({
           type: 'info',
           label: 'info'
         }, {
+          type: 'primary',
+          label: 'primary'
+        }, {
           type: 'success',
           label: 'success'
+        }, {
+          type: 'warning',
+          label: 'warning'
+        }, {
+          type: 'error',
+          label: 'error'
         }
       ]
     }

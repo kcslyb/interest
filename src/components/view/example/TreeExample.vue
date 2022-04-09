@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div class="margin-bottom">
-      <cs-label label="树结构组件"></cs-label>
-    </div>
+    <eg-container>
+      <cs-label class="margin-bottom" label="树结构组件"></cs-label>
+      <cs-tree :current-item="dataObj.currentItem" :options="options" @click-node="clickNode"></cs-tree>
+    </eg-container>
     <eg-container
         label="基础用法"
         type="params"
@@ -13,10 +14,6 @@
         type="methods"
         :data="methodsData"
     ></eg-container>
-    <eg-container>
-      <cs-label class="margin-bottom" label="示例"></cs-label>
-      <cs-tree :current-item="dataObj.currentItem" :options="options" @click-node="clickNode"></cs-tree>
-    </eg-container>
   </div>
 </template>
 

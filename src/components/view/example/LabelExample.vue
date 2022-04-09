@@ -1,15 +1,7 @@
 <template>
   <div>
-    <div class="margin-bottom">
+    <eg-container content="">
       <cs-label label="标签组件"></cs-label>
-    </div>
-    <eg-container></eg-container>
-    <eg-container
-        label="插槽(slot)"
-        :data="slotData"
-        :columns="slotColumns">
-    </eg-container>
-    <eg-container :content="labelCode">
       <cs-label class="margin-bottom" :show-icon="false" text-align="center" label="不显示前缀且居中"></cs-label>
       <cs-label class="margin-bottom" label="示例"></cs-label>
       <cs-label class="margin-bottom" :show-under-line="true" label="显示下划线"></cs-label>
@@ -23,6 +15,12 @@
           <span>eg</span>
         </template>
       </cs-label>
+    </eg-container>
+    <eg-container></eg-container>
+    <eg-container
+        label="插槽(slot)"
+        :data="slotData"
+        :columns="slotColumns">
     </eg-container>
   </div>
 </template>

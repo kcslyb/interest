@@ -130,6 +130,7 @@ const accountInfo = computed(mapGetters([`account/${QUERY_ACCOUNT}`])[`account/$
 
       .content {
         flex: auto;
+        padding: 0 5%;
 
         .link {
           margin-bottom: 5px;

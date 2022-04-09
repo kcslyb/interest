@@ -1,8 +1,27 @@
 <template>
   <div>
-    <div class="margin-bottom">
+    <eg-container>
       <cs-label label="按钮组件"></cs-label>
-    </div>
+      <div class="text-left margin-bottom">
+        <cs-button>基本</cs-button>
+        <cs-button type="success">文本</cs-button>
+        <cs-button type="primary">主要</cs-button>
+        <cs-button type="warning">警告</cs-button>
+        <cs-button type="error">危险</cs-button>
+      </div>
+      <cs-label class="margin-bottom" label="禁用"></cs-label>
+      <div class="text-left margin-bottom">
+        <cs-button disabled>基本</cs-button>
+        <cs-button disabled type="success">文本</cs-button>
+        <cs-button disabled type="primary">主要</cs-button>
+        <cs-button disabled type="warning">警告</cs-button>
+        <cs-button disabled type="error">危险</cs-button>
+      </div>
+      <cs-label class="margin-bottom" label="按钮组"></cs-label>
+      <div class="text-left">
+        <cs-button-group></cs-button-group>
+      </div>
+    </eg-container>
     <eg-container
         label="基本用法 参数介绍"
         :data="propData"
@@ -38,24 +57,6 @@
           {label: '参数', prop: 'params'},
         ]">
     </eg-container>
-    <eg-container>
-      <cs-label class="margin-bottom" label="示例"></cs-label>
-      <cs-label class="margin-bottom" label="基础用法"></cs-label>
-      <div class="text-left margin-bottom">
-        <cs-button span>基本</cs-button>
-        <cs-button span type="success">文本</cs-button>
-        <cs-button span type="primary">主要</cs-button>
-        <cs-button type="warning">警告</cs-button>
-      </div>
-      <cs-label class="margin-bottom" label="禁用"></cs-label>
-      <div class="text-left margin-bottom">
-        <cs-button disabled type="success">文本</cs-button>
-      </div>
-      <cs-label class="margin-bottom" label="按钮组"></cs-label>
-      <div class="text-left">
-        <cs-button-group :btn-list="btnList"></cs-button-group>
-      </div>
-    </eg-container>
   </div>
 </template>
 
@@ -84,16 +85,10 @@ const propColumns = [
 ]
 const propData = [
   {
-    param: 'span',
-    description: '后面是否跟间距',
-    type: 'Boolean',
-    values: 'true/false',
-    default: 'false'
-  }, {
     param: 'type',
     description: '按钮类型',
     type: 'String',
-    values: 'info/warning/primary/text',
+    values: 'info/warning/primary/warning/error',
     default: 'info',
   }, {
     param: 'disabled',

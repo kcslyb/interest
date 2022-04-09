@@ -1,7 +1,11 @@
 <template>
-  <div class="margin-bottom">
+  <eg-container>
     <cs-label label="表格组件"></cs-label>
-  </div>
+    <cs-table
+        :data="data"
+        :columns="columns"
+    ></cs-table>
+  </eg-container>
   <eg-container
       label="参数 （columns、data 为必需字段）"
       type="params"
@@ -16,13 +20,6 @@
       label="事件 Event"
       type="methods"
       :data="methodsData">
-  </eg-container>
-  <eg-container>
-    <cs-label class="margin-bottom" label="示例"></cs-label>
-    <cs-table
-      :data="data"
-      :columns="columns"
-    ></cs-table>
   </eg-container>
 </template>
 

@@ -1,30 +1,27 @@
 <template>
   <div>
-<!--    <div class="text-left margin-bottom">-->
-<!--      <cs-quill></cs-quill>-->
-<!--    </div>-->
-<!--    <div class="text-left margin-bottom">-->
-<!--      <cs-label label="示例">-->
-<!--        <template v-slot:right>-->
-<!--          <cs-button-group :btn-list="btnList" @on-click="handleClick"></cs-button-group>-->
-<!--        </template>-->
-<!--      </cs-label>-->
-<!--    </div>-->
-<!--    <eg-container>-->
-<!--      <cs-table :is-over-hidden="false" :columns="columns" :data="data.tableData"></cs-table>-->
-<!--    </eg-container>-->
-    <eg-container :content="getContent">
-      <cs-label showUnderLine label="插件方法"></cs-label>
-      <cs-button class="margin-right" @on-click="handleClickLoading">loading</cs-button>
-      <cs-button class="margin-right" @on-click="handleClickDialog">dialog</cs-button>
-      <cs-button @on-click="handleClickNotify">notify</cs-button>
+    <eg-container content="">
+      <cs-label showUnderLine label="loading方法"></cs-label>
+      <cs-button @on-click="handleClickLoading('')">loading</cs-button>
+      <cs-button @on-click="handleClickLoading('loading...')">loading Text</cs-button>
+    </eg-container>
+    <eg-container content="">
+      <cs-label showUnderLine label="notify方法"></cs-label>
+      <cs-button @on-click="handleClickNotify('default')">default</cs-button>
+      <cs-button type="success" @on-click="handleClickNotify('success')">success</cs-button>
+      <cs-button type="warning" @on-click="handleClickNotify('warning')">warning</cs-button>
+      <cs-button type="error" @on-click="handleClickNotify('error')">error</cs-button>
+    </eg-container>
+    <eg-container content="">
+      <cs-label showUnderLine label="dialog方法"></cs-label>
+      <cs-button @on-click="handleClickDialog">dialog</cs-button>
     </eg-container>
     <eg-container>
       <cs-label label="form" showUnderLine>
         <template v-slot:right>
           <div>
-            <cs-button class="margin-right" @on-click="handleAdd">add</cs-button>
-            <cs-button class="margin-right" @on-click="handleUpdate">update</cs-button>
+            <cs-button @on-click="handleAdd">add</cs-button>
+            <cs-button @on-click="handleUpdate">update</cs-button>
             <cs-button @on-click="handleDelete">delete</cs-button>
           </div>
         </template>
@@ -52,20 +49,13 @@
 
 <script setup>
 import {routes} from "../../../route"
-import CsButtonGroup from "../../package/button/src/CsButtonGroup.vue"
 import CsButton from "../../package/button/src/CsButton.vue"
-import CsQuill from "../../package/quill/src/CsQuill.vue"
-import CsTable from "../../package/table/src/CsTable.vue"
-import CsLabel from "../../package/label/src/CsLabel.vue"
-import CsDialog from "../../package/dialog/src/CsDialog.vue"
-import CsLoading from "../../package/loading/src/CsLoading.vue"
 import CsForm from "../../package/form/src/CsForm.vue"
 import EgContainer from "./components/EgContainer.vue"
-import CsFormItem from "../../package/form/src/CsFormItem.vue";
-import CsInput from "../../package/form/src/items/CsInput.vue";
 import {useRouter} from "vue-router"
 import {getCurrentInstance, reactive, h, ref} from "vue"
 import LocalStorage from "../../lib/localStorage";
+import {resetObj} from "../../lib/utils";
 
 const data = reactive({
   tableData: [],
@@ -214,8 +204,8 @@ pageColumns.unshift({
   label: 'checkbox',
 })
 
-const handleClickLoading = () => {
-  proxy.$promiseCsLoading().then(res => {
+const handleClickLoading = (text) => {
+  proxy.$promiseCsLoading({text}).then(res => {
     setTimeout(() => {
       res.close()
     }, 1000)
@@ -223,6 +213,7 @@ const handleClickLoading = () => {
 }
 
 const handleClickDialog = () => {
+  let dialogCtx = null
   proxy.$csDialog({title: '新增'}, {
     default: () => h(CsForm, {
       ...{items: items, modelValue: data.formData}
@@ -231,15 +222,20 @@ const handleClickDialog = () => {
       onOnClick: () => {
         console.info('data')
         console.info(data.formData)
+        // close dialog reset data.
+        dialogCtx.handleClose(() => {
+          resetObj(data.formData)
+        })
       }
     }, {default: () => '保存'})
-  }).then(res => {
-    console.info('$csDialog.then: ', res)
+  }).then(proxy => {
+    console.info('$csDialog.then: ', proxy)
+    dialogCtx = proxy
   })
 }
 
-const handleClickNotify = () => {
-  proxy.$csNotify({msg: '提示通知文本行'})
+const handleClickNotify = (type) => {
+  proxy.$csNotify({msg: `提示通知文本行${type}`, type})
 }
 
 const getContent = `const handleClickLoading = () => {

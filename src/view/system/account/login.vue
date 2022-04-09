@@ -18,7 +18,11 @@
           </cs-button>
         </div>
         <div class="register">
+          <span class="btn-back cs-pointer" @click.stop="handleBack">返回</span>
           <span class="btn cs-pointer" @click.stop="handleSwitch">{{ !data.isLogin ? '登录' : '注册' }}</span>
+        </div>
+        <div class="state-box">
+          <cs-box></cs-box>
         </div>
       </div>
     </template>
@@ -39,6 +43,7 @@ import CryptoUtils from "../../../components/lib/crypto-utils";
 import {mapActions, mapGetters, useStore} from "vuex";
 import {QUERY_ACCOUNT, QUERY_ROUTER} from "../../../store/mutation-types";
 import getStateServer from "../../../state/state-serve";
+import createLoading from "../../../components/package/loading/src/plugin/createLoading";
 
 const state = useStore()
 const userForm = ref(null)
@@ -48,8 +53,8 @@ const data = reactive({
   passwordMsg: '',
   userNameMsg: '',
   userDto: {
-    userName: 'kcs',
-    password: 'kcs'
+    userName: '',
+    password: ''
   }
 })
 
@@ -117,6 +122,7 @@ const handleLogin = () => {
   handleUserNameChange()
   handlePasswordChange()
   const {value} = userForm
+  const loading = createLoading({})
   value.submit().then(() => {
     const csStorageServe = CsStorage.getInstance(TABLE.ACCOUNT)
     if (!data.isLogin) {
@@ -147,6 +153,8 @@ const handleLogin = () => {
         }
       })
     }
+  }).finally(() => {
+    loading.close()
   })
 }
 
@@ -159,7 +167,6 @@ const handleBack = () => {
 <style scoped lang="less">
 .content {
   height: 100%;
-  padding: 0 6%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -173,6 +180,7 @@ const handleBack = () => {
 
   .content {
     flex: auto;
+    padding: 0 5%;
 
     .link {
       margin-bottom: 5px;
@@ -216,18 +224,37 @@ const handleBack = () => {
     text-align: right;
     line-height: 16px;
     padding-bottom: 10px;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+
 
     .btn {
+      padding: 0 20px;
+      font-size: 16px;
+      font-weight: bold;
+
       &:hover {
-        font-size: 16px;
-        font-weight: bold;
         color: @border-color;
       }
     }
 
-    .back {
-      float: left;
+    .btn-back {
+      padding: 0 20px;
+      font-size: 12px;
+      font-weight: bold;
+
+      &:hover {
+        color: @border-color;
+      }
     }
+  }
+
+  .state-box {
+    position: absolute;
+    left: 0;
+    bottom: -35px;
+    width: 100%;
   }
 }
 
