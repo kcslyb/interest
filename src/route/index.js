@@ -10,7 +10,7 @@ export const routes = [
         path: "/",
         name: "index",
         meta: {label: '学习日志'},
-        component: () => import("../view/index.vue")
+        component: () => import("../view/game.vue")
     }, {
         path: "/login",
         name: "login",
