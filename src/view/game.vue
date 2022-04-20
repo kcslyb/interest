@@ -105,8 +105,8 @@ const handleTouch = ({event}) => {
     data.statusObj[event] = false
   }
   // 游戏失败
-  const values = Object.values(data.statusObj).filter(val => val)
-  if (values.length === 0) {
+  const values = Object.values(data.statusObj)
+  if (values.length === 4 && !values.includes(true)) {
     proxy.$csNotify({msg: '游戏失败！', type: 'error'})
   }
   // 每次操作完保存结果
