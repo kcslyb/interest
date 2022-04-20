@@ -47,10 +47,13 @@ const translation = (indexArr, dataArr) => {
     const curValue = dataArr[indexArr[j]]
     const lastValue = tempValue.length ? tempValue[tempValue.length - 1] : ''
     const curValueNotEmpty = isNotEmpty(dataArr[indexArr[j]])
-    if (curValueNotEmpty && isNotEmpty(lastValue) && lastValue === curValue) {
-      tempValue[tempValue.length - 1] = curValue * 2
+    if (curValueNotEmpty) {
+      if (isNotEmpty(lastValue) && lastValue === curValue) {
+        tempValue[tempValue.length - 1] = curValue * 2
+      } else {
+        tempValue.push(curValue)
+      }
     }
-    curValueNotEmpty && tempValue.push(curValue)
   }
   for (let i = 0; i < indexArr.length; i++) {
     dataArr[indexArr[i]] = i < tempValue.length ? tempValue[i] : ''
